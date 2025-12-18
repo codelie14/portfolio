@@ -55,8 +55,19 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Debug information
+    console.log('EmailJS Config:', {
+      serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      autoReplyTemplateId: import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID,
+      publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY ? 'SET' : 'NOT SET'
+    });
+    
+    console.log('Form Data:', formData);
+    
     try {
       // Send notification email to you
+      console.log('Sending notification email...');
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -68,19 +79,37 @@ export default function Contact() {
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
+      console.log('Notification email sent successfully');
       
       // Send auto-reply email to the sender
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID,
-        {
-          from_name: 'Archange Elie Yatte',
-          to_name: formData.name,
-          to_email: formData.email,
-          message: formData.message,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
+      try {
+        const autoReplyTemplateId = import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID;
+        
+        // Only send auto-reply if template ID is configured
+        if (autoReplyTemplateId) {
+          console.log('Sending auto-reply email...');
+          await emailjs.send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID,
+            autoReplyTemplateId,
+            {
+              from_name: 'Archange Elie Yatte',
+              to_name: formData.name,
+              to_email: formData.email,
+              message: formData.message,
+              from_email: formData.email, // Some templates might expect this
+              reply_to: formData.email, // Some templates might expect this
+            },
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+          );
+          console.log('Auto-reply email sent successfully');
+        } else {
+          console.warn('Auto-reply template ID not configured, skipping auto-reply');
+        }
+      } catch (autoReplyError) {
+        console.error('Auto-reply email failed:', autoReplyError);
+        // We don't want to fail the whole operation if auto-reply fails
+        // The main notification email was sent successfully
+      }
       
       toast({
         title: "Message envoyé !",
@@ -90,11 +119,30 @@ export default function Contact() {
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('EmailJS error:', error);
-      toast({
-        title: "Erreur d'envoi",
-        description: "Impossible d'envoyer le message. Veuillez réessayer plus tard.",
-        variant: "destructive",
-      });
+      
+      // Check if it's a specific EmailJS error
+      if (error instanceof Error) {
+        console.error('Error details:', error.message);
+        if (error.message.includes('FAILED')) {
+          toast({
+            title: "Erreur d'envoi",
+            description: "Impossible d'envoyer le message. Veuillez vérifier votre connexion et réessayer.",
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Erreur d'envoi",
+            description: "Une erreur s'est produite lors de l'envoi du message. Veuillez réessayer plus tard.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        toast({
+          title: "Erreur d'envoi",
+          description: "Une erreur inconnue s'est produite. Veuillez réessayer plus tard.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }
