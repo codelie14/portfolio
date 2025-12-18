@@ -71,7 +71,7 @@ export default function About() {
                   <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-accent p-1">
                     <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
                       {/* <User className="w-16 h-16 text-primary" /> */}
-                      <img src="/public/media/photo-profile.png" alt="Archange Elie Yatte" className="rounded-full" />
+                      <img src="/media/photo-profile.png" alt="Archange Elie Yatte" className="rounded-full" />
                     </div>
                   </div>
                   <h3 className="text-2xl font-bold mb-2">Archange Elie Yatte</h3>

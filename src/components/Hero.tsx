@@ -84,7 +84,7 @@ export default function Hero() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
             <Button variant="cyber" size="xl" asChild>
-              <a href="/public/media/CV_YATTE_ARCHANGE.pdf" download className="flex items-center gap-2">
+              <a href="/media/CV_YATTE_ARCHANGE.pdf" download className="flex items-center gap-2">
                 <Download className="w-5 h-5" />
                 Télécharger mon CV
               </a>

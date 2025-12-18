@@ -69,7 +69,7 @@ export default function Navigation() {
               transition={{ delay: 0.5 }}
             >
               <Button variant="cyber" size="sm" asChild>
-                <a href="/public/media/CV_YATTE_ARCHANGE.pdf" download>
+                <a href="/media/CV_YATTE_ARCHANGE.pdf" download>
                   Télécharger CV
                 </a>
               </Button>
