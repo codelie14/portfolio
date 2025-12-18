@@ -65,6 +65,15 @@
     scroll-behavior: smooth;
   }
 
+  /* Hide scrollbar during loading */
+  html.loading {
+    overflow: hidden;
+  }
+
+  html.loading::-webkit-scrollbar {
+    display: none;
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;
