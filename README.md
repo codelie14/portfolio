@@ -65,15 +65,28 @@ Les fichiers de production seront générés dans le dossier `dist/`.
 
 ## 🌐 Déploiement sur Vercel
 
-1. Connecter votre repository GitHub à Vercel
-2. Vercel détectera automatiquement la configuration Vite
-3. Cliquer sur "Deploy"
+### Via l'interface web de Vercel :
 
-Ou via la CLI Vercel :
+1. Connectez-vous à [Vercel](https://vercel.com/)
+2. Cliquez sur "New Project"
+3. Importez votre repository depuis GitHub
+4. Vercel détectera automatiquement la configuration Vite
+5. Assurez-vous que les paramètres suivants sont configurés :
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Install Command: `npm install`
+6. Cliquez sur "Deploy"
+
+### Via la CLI Vercel :
+
 ```bash
 npm i -g vercel
-vercel
+vercel deploy
 ```
+
+### Configuration personnalisée :
+
+Un fichier `vercel.json` est inclus dans le projet avec les paramètres nécessaires pour le déploiement.
 
 ## 📄 CV
 
