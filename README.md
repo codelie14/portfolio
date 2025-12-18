@@ -88,6 +88,21 @@ vercel deploy
 
 Un fichier `vercel.json` est inclus dans le projet avec les paramètres nécessaires pour le déploiement.
 
+## 📧 Configuration EmailJS
+
+Pour activer le formulaire de contact, vous devez configurer EmailJS :
+
+1. Créez un compte sur [EmailJS](https://www.emailjs.com/)
+2. Créez un service email (SMTP ou service existant comme Gmail)
+3. Créez un template d'email avec les champs : `from_name`, `from_email`, `message`, `to_name`
+4. Copiez votre Service ID, Template ID et Public Key
+5. Configurez les variables d'environnement dans Vercel :
+   - `VITE_EMAILJS_SERVICE_ID`
+   - `VITE_EMAILJS_TEMPLATE_ID`
+   - `VITE_EMAILJS_PUBLIC_KEY`
+
+Vous pouvez également créer un fichier `.env` local avec ces valeurs pour le développement.
+
 ## 📄 CV
 
 Le CV est disponible au téléchargement via le bouton "Télécharger mon CV" ou directement à l'adresse `/media/CV_YATTE_ARCHANGE.pdf`.
