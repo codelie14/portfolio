@@ -2,41 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import ProjectCard from './ProjectCard';
-
-const projects = [
-  {
-    title: 'CYBERGRAM',
-    description: 'Plateforme de veille automatisée en cybersécurité avec génération d\'articles par IA. Agrégation de sources, analyse et publication automatique.',
-    technologies: ['Node.js', 'Python', 'IA', 'API REST', 'MongoDB'],
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop',
-    category: 'Cybersécurité'
-  },
-  {
-    title: 'HackPen',
-    description: 'Plateforme de test de pénétration sous Linux. Environnement sécurisé pour l\'apprentissage et la pratique des techniques de pentesting.',
-    technologies: ['Python', 'Linux', 'Bash', 'Docker', 'Nmap'],
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop',
-    category: 'Pentesting'
-  },
-  {
-    title: 'WSAS',
-    description: 'Web Security Attack Simulator - Plateforme éducative pour comprendre et tester les vulnérabilités Web XSS et CSRF dans un environnement 100% sécurisé.',
-    technologies: ['JavaScript', 'Node.js', 'Express', 'HTML/CSS'],
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&h=400&fit=crop',
-    category: 'Éducatif'
-  },
-  {
-    title: 'Plateforme Artisans Ivoiriens',
-    description: 'Plateforme web sécurisée pour les artisans ivoiriens. Sécurisation complète avec chiffrement bcrypt, protection anti-injections SQL et contrôles d\'accès.',
-    technologies: ['PHP', 'MySQL', 'Apache', 'bcrypt', 'PDO'],
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
-    category: 'E-commerce'
-  }
-];
+import { projects } from '@/data';
 
 export default function Projects() {
   const ref = useRef(null);

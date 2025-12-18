@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Folder } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type Project = {
   title: string;
@@ -16,11 +17,18 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const navigate = useNavigate();
+  
+  const handleClick = () => {
+    navigate(`/projects/${project.id}`);
+  };
+  
   return (
     <motion.div
-      className="group relative glass-card overflow-hidden project-card"
+      className="group relative glass-card overflow-hidden project-card cursor-pointer"
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
+      onClick={handleClick}
     >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
