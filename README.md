@@ -94,11 +94,14 @@ Pour activer le formulaire de contact, vous devez configurer EmailJS :
 
 1. Créez un compte sur [EmailJS](https://www.emailjs.com/)
 2. Créez un service email (SMTP ou service existant comme Gmail)
-3. Créez un template d'email avec les champs : `from_name`, `from_email`, `message`, `to_name`
-4. Copiez votre Service ID, Template ID et Public Key
+3. Créez deux templates d'email :
+   - **Template principal** avec les champs : `from_name`, `from_email`, `message`, `to_name`
+   - **Template d'auto-réponse** avec les champs : `from_name`, `to_name`, `to_email`, `message`
+4. Copiez votre Service ID, Template IDs et Public Key
 5. Configurez les variables d'environnement dans Vercel :
    - `VITE_EMAILJS_SERVICE_ID`
    - `VITE_EMAILJS_TEMPLATE_ID`
+   - `VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID`
    - `VITE_EMAILJS_PUBLIC_KEY`
 
 Vous pouvez également créer un fichier `.env` local avec ces valeurs pour le développement.

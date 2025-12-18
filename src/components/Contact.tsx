@@ -56,7 +56,7 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // Send email using EmailJS
+      // Send notification email to you
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -65,6 +65,19 @@ export default function Contact() {
           from_email: formData.email,
           message: formData.message,
           to_name: 'Archange Elie Yatte',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      
+      // Send auto-reply email to the sender
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID,
+        {
+          from_name: 'Archange Elie Yatte',
+          to_name: formData.name,
+          to_email: formData.email,
+          message: formData.message,
         },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
