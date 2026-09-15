@@ -91,7 +91,12 @@ export default function About() {
                     <span className="text-accent">$</span>
                     <span className="text-muted-foreground">education</span>
                   </div>
-                  <p className="text-foreground ml-4">Licence Informatique & Science du Numérique</p>
+                  <p className="text-foreground ml-4 mb-3">Licence Informatique & Science du Numérique</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-accent">$</span>
+                    <span className="text-muted-foreground">poste actuel</span>
+                  </div>
+                  <p className="text-foreground ml-4">Security Intern @ Huawei — GNOC, Administration IAM (depuis juillet 2026)</p>
                 </div>
               </div>
             </div>
