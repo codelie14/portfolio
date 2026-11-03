@@ -39,7 +39,7 @@ Portfolio professionnel de Archange Elie Yatte, Développeur Full-Stack et Analy
 
 1. Cloner le repository :
 ```bash
-git clone https://github.com/archangeyatte/portfolio.git
+git clone https://github.com/codelie14/portfolio.git
 cd portfolio
 ```
 
