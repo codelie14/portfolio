@@ -25,7 +25,7 @@ PROJETS
 - CyberGram V1 (en ligne, cybergram.dev, lancée le 31 octobre 2026) : écosystème cybersécurité. Next.js, TypeScript, Django REST Framework, PostgreSQL, Redis, Celery. Cours, communauté, veille CVE, workspace de pentest, back-office, permissions par rôle et abonnements.
 - GateKeeper : plateforme IAM de gestion des demandes et des accès. FastAPI, PostgreSQL, Celery, Nuxt 4, OIDC/SSO. Workflow d'approbation (escalade, délégation, signature électronique), provisioning, détection des comptes orphelins, journal d'audit ; Clean Architecture, couverture de tests supérieure à 80 %.
 - K.A.M.I. : application Flutter pour piloter un hôte Kali Linux à distance via un tunnel VPN (WireGuard/Tailscale), daemon FastAPI, terminal, missions de scan, IA locale (Ollama), bureau distant.
-- HackPen : plateforme d'apprentissage du pentest sous Linux, conteneurs Docker éphémères.
+- HackPen : l'espace de travail pentest de CyberGram (projets, cibles, findings, éditeur visuel de workflows, rapports, marketplace de plugins). Les visuels du portfolio pour CyberGram et HackPen sont des maquettes de conception.
 
 COMPÉTENCES
 - Réseau et sécurité : IAM, comptes à privilèges, LAN/WAN, TCP/IP, pare-feu, VPN WireGuard, analyse de vulnérabilités, Nmap, Wireshark.

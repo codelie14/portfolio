@@ -190,6 +190,11 @@ export default function ProjectDetail() {
           <Reveal>
             <p className="section-kicker">{tr('Galerie', 'Gallery')}</p>
           </Reveal>
+          {'mockups' in project && project.mockups && (
+            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1 text-xs font-mono text-yellow-300">
+              {tr('Maquettes de conception — l’interface en ligne peut différer', 'Design mockups — the live interface may differ')}
+            </p>
+          )}
           <div className="mt-8 grid md:grid-cols-2 gap-4">
             {gallery.map((src, i) => (
               <Reveal key={src} delay={(i % 2) * 0.1} className={i === 0 && gallery.length % 2 === 1 ? 'md:col-span-2' : ''}>

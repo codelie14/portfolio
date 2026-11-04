@@ -49,20 +49,21 @@ export const projectsEn: Record<string, Override> = {
   },
   hackpen: {
     category: 'Pentesting',
-    description: 'Linux penetration-testing platform. A safe environment to learn and practise pentesting techniques.',
+    description: 'CyberGram’s pentest workspace: projects, targets, findings, automated workflows, reports and a plugin marketplace.',
     detailedDescription:
-      'HackPen is an interactive learning platform designed to train security practitioners in penetration-testing techniques. Built on Linux, it provides an isolated, safe environment where users can legally practise a range of pentesting methods.',
+      'HackPen is the penetration-testing module of the CyberGram ecosystem. It runs a pentest engagement end to end: project creation, target inventory, tool chaining through workflows, tracking findings until they are fixed, then report generation. A marketplace extends the platform with plugins, and feature access depends on the subscription plan.',
     features: [
-      'Sandboxed Linux environment for safe testing',
-      'Hands-on labs at several difficulty levels',
-      'Progress tracking and badges',
-      'Docker integration for realistic scenarios',
-      'Pre-installed pentesting tools (Nmap, Metasploit, Burp Suite)',
+      'Dashboard: execution activity, findings by severity, recent projects',
+      'Projects and targets: inventory of hosts, services and vulnerabilities per target',
+      'Findings: filters by severity and status, detailed sheet with description, evidence and remediation',
+      'Visual workflow editor: chain recon, scanning and exploitation with drag and drop',
+      'Reports: vulnerability trends, most affected targets, report export',
+      'Plugin marketplace to extend the platform',
     ],
     challenges:
-      'Building an environment that is both realistic and safe was the main technical challenge, especially resource isolation and preventing leaks.',
+      'Bringing structure and traceability to pentest engagements that are often run with scattered tools, without losing the flexibility a pentester needs.',
     solutions:
-      'A Docker-based architecture with ephemeral containers and strict security policies guarantees the platform’s integrity.',
+      'A project-centred model (targets, findings and reports linked together) and composable workflows that automate repetitive tool chains, integrated with CyberGram accounts, roles and subscriptions.',
   },
   indrawatch: {
     category: 'Observability',

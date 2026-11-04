@@ -33,6 +33,7 @@ export const projects = [
     technologies: ['Next.js', 'TypeScript', 'Django', 'DRF', 'PostgreSQL', 'Redis', 'Celery', 'Docker'],
     year: 2026,
     link: 'https://cybergram.dev',
+    mockups: true,
     image: '/media/projects/cybergram/accueil.webp',
     category: 'Cybersécurité',
     detailedDescription: 'CyberGram rassemble en une seule plateforme tout ce dont un apprenant ou un professionnel de la cybersécurité a besoin : des cours structurés, une communauté, une veille CVE à jour, un workspace de pentest et un back-office d\'administration. Le frontend est en Next.js/TypeScript, le backend en Django REST Framework avec PostgreSQL, Redis et Celery pour les tâches asynchrones, le tout conteneurisé avec Docker. La V1 a été lancée le 31 octobre 2026 sur cybergram.dev.',
@@ -62,19 +63,21 @@ export const projects = [
   {
     id: 'hackpen',
     title: 'HackPen',
-    description: 'Plateforme de test de pénétration sous Linux. Environnement sécurisé pour l\'apprentissage et la pratique des techniques de pentesting.',
-    technologies: ['Python', 'Linux', 'Bash', 'Docker', 'Nmap'],
-    year: 2025,
+    description: 'L\'espace de travail pentest de CyberGram : projets, cibles, findings, workflows automatisés, rapports et marketplace de plugins.',
+    technologies: ['Next.js', 'TypeScript', 'Django', 'DRF', 'PostgreSQL', 'Celery', 'Docker'],
+    year: 2026,
     link: '#',
+    mockups: true,
     image: '/media/projects/hackpen/dashboard.webp',
     category: 'Pentesting',
-    detailedDescription: 'HackPen est une plateforme d\'apprentissage interactive conçue pour former les professionnels de la cybersécurité aux techniques de test de pénétration. Basée sur Linux, elle fournit un environnement isolé et sécurisé où les utilisateurs peuvent pratiquer légalement diverses méthodes de pentesting.',
+    detailedDescription: 'HackPen est le module de tests d\'intrusion de l\'écosystème CyberGram. Il organise une mission de pentest de bout en bout : création du projet, inventaire des cibles, enchaînement des outils via des workflows, suivi des vulnérabilités trouvées (findings) jusqu\'à leur correction, puis génération des rapports. Une marketplace permet d\'étendre la plateforme avec des plugins, et l\'accès aux fonctionnalités dépend du plan d\'abonnement.',
     features: [
-      'Environnement Linux sandboxé pour des tests sécurisés',
-      'Laboratoires pratiques avec différents niveaux de difficulté',
-      'Suivi des progrès et système de badges',
-      'Intégration de Docker pour des scénarios réalistes',
-      'Outils préinstallés de pentesting (Nmap, Metasploit, Burp Suite)'
+      'Tableau de bord : activité d\'exécution, répartition des findings par sévérité, projets récents',
+      'Projets et cibles : inventaire des hôtes, services et vulnérabilités détectées par cible',
+      'Findings : filtres par sévérité et statut, fiche détaillée avec description, preuve et remédiation',
+      'Éditeur visuel de workflows : enchaîner reconnaissance, scan et exploitation en glisser-déposer',
+      'Rapports : évolution des vulnérabilités, top des cibles touchées, export du rapport',
+      'Marketplace de plugins pour étendre les capacités de la plateforme'
     ],
     images: [
       '/media/projects/hackpen/dashboard.webp',
@@ -85,8 +88,8 @@ export const projects = [
       '/media/projects/hackpen/marketplace.webp'
     ],
     videos: [],
-    challenges: 'La création d\'un environnement à la fois réaliste et sécurisé représentait un défi technique majeur, notamment en matière d\'isolation des ressources et de prévention des fuites potentielles.',
-    solutions: 'Nous avons mis en place une architecture basée sur Docker avec des conteneurs éphémères et des politiques de sécurité strictes pour garantir l\'intégrité de la plateforme.'
+    challenges: 'Donner un cadre structuré et traçable à des missions de pentest souvent menées avec des outils dispersés, sans perdre la flexibilité dont un pentesteur a besoin.',
+    solutions: 'Un modèle centré sur le projet (cibles, findings, rapports liés entre eux) et des workflows composables qui automatisent les enchaînements d\'outils répétitifs, intégrés aux comptes, rôles et abonnements de CyberGram.'
   },
   {
     id: 'indrawatch',

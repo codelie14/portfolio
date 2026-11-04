@@ -59,6 +59,11 @@ function Card({
             <span className="px-3 py-1.5 rounded-full border border-white/15 bg-black/30 backdrop-blur-md" style={{ color: `hsl(${accent})` }}>
               {p.category}
             </span>
+            {'mockups' in p && p.mockups && (
+              <span className="ml-auto mr-3 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/15 text-[10px] text-white/70">
+                {tr('Maquette', 'Mockup')}
+              </span>
+            )}
             <span className="text-muted-foreground">
               {String(i + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {p.year}
             </span>

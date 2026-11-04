@@ -99,7 +99,7 @@ function projectBody(m) {
     <h1>${esc(p.title)}</h1>
     <p><em>${esc(p.category)} · ${p.year}</em>${live ? ` · <a href="${p.link}">${esc(p.link.replace('https://', ''))}</a>` : ''}</p>
     <p>${esc(p.detailedDescription)}</p>
-    <h2>Fonctionnalités</h2>
+${p.mockups ? '    <p><em>Visuels : maquettes de conception.</em></p>\n' : ''}    <h2>Fonctionnalités</h2>
     <ul>
 ${p.features.map((f) => `      <li>${esc(f)}</li>`).join('\n')}
     </ul>
