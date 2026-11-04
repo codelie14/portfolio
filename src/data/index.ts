@@ -33,7 +33,7 @@ export const projects = [
     technologies: ['Next.js', 'TypeScript', 'Django', 'DRF', 'PostgreSQL', 'Redis', 'Celery', 'Docker'],
     year: 2026,
     link: 'https://cybergram.dev',
-    image: '/media/projects/covers/cybergram.svg',
+    image: '/media/projects/cybergram/accueil.webp',
     category: 'Cybersécurité',
     detailedDescription: 'CyberGram rassemble en une seule plateforme tout ce dont un apprenant ou un professionnel de la cybersécurité a besoin : des cours structurés, une communauté, une veille CVE à jour, un workspace de pentest et un back-office d\'administration. Le frontend est en Next.js/TypeScript, le backend en Django REST Framework avec PostgreSQL, Redis et Celery pour les tâches asynchrones, le tout conteneurisé avec Docker. La V1 a été lancée le 31 octobre 2026 sur cybergram.dev.',
     features: [
@@ -44,7 +44,17 @@ export const projects = [
       'Back-office d\'administration complet',
       'Permissions par rôle, gestion des abonnements et des droits d\'accès'
     ],
-    images: ['/media/projects/covers/cybergram.svg'],
+    images: [
+      '/media/projects/cybergram/accueil.webp',
+      '/media/projects/cybergram/dashboard.webp',
+      '/media/projects/cybergram/learn.webp',
+      '/media/projects/cybergram/intelligence.webp',
+      '/media/projects/cybergram/communaute.webp',
+      '/media/projects/cybergram/evenements.webp',
+      '/media/projects/cybergram/blog.webp',
+      '/media/projects/cybergram/admin-dashboard.webp',
+      '/media/projects/cybergram/admin-securite.webp'
+    ],
     videos: [],
     challenges: 'Faire cohabiter du contenu public, des espaces communautaires et des outils réservés aux abonnés dans une même plateforme, sans qu\'un utilisateur puisse accéder à ce qui ne lui est pas destiné.',
     solutions: 'Un modèle de permissions par rôle appliqué côté API (Django REST Framework), couplé à la gestion des abonnements : chaque ressource vérifie les droits de l\'utilisateur avant d\'être servie. Les traitements lourds (veille CVE, notifications) passent par Celery et Redis pour garder l\'interface réactive.'
@@ -56,7 +66,7 @@ export const projects = [
     technologies: ['Python', 'Linux', 'Bash', 'Docker', 'Nmap'],
     year: 2025,
     link: '#',
-    image: '/media/projects/covers/hackpen.svg',
+    image: '/media/projects/hackpen/dashboard.webp',
     category: 'Pentesting',
     detailedDescription: 'HackPen est une plateforme d\'apprentissage interactive conçue pour former les professionnels de la cybersécurité aux techniques de test de pénétration. Basée sur Linux, elle fournit un environnement isolé et sécurisé où les utilisateurs peuvent pratiquer légalement diverses méthodes de pentesting.',
     features: [
@@ -66,7 +76,14 @@ export const projects = [
       'Intégration de Docker pour des scénarios réalistes',
       'Outils préinstallés de pentesting (Nmap, Metasploit, Burp Suite)'
     ],
-    images: ['/media/projects/covers/hackpen.svg'],
+    images: [
+      '/media/projects/hackpen/dashboard.webp',
+      '/media/projects/hackpen/findings.webp',
+      '/media/projects/hackpen/workflow-builder.webp',
+      '/media/projects/hackpen/target.webp',
+      '/media/projects/hackpen/rapports.webp',
+      '/media/projects/hackpen/marketplace.webp'
+    ],
     videos: [],
     challenges: 'La création d\'un environnement à la fois réaliste et sécurisé représentait un défi technique majeur, notamment en matière d\'isolation des ressources et de prévention des fuites potentielles.',
     solutions: 'Nous avons mis en place une architecture basée sur Docker avec des conteneurs éphémères et des politiques de sécurité strictes pour garantir l\'intégrité de la plateforme.'

@@ -66,7 +66,7 @@ export default function ProjectDetail() {
           style={{ scale: imgScale, y: imgY }}
           className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(220_22%_4%/0.35)_0%,hsl(220_22%_4%/0.7)_55%,hsl(var(--background))_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(220_22%_4%/0.55)_0%,hsl(220_22%_4%/0.85)_50%,hsl(var(--background))_100%)]" />
         <motion.div style={{ y: titleY, opacity: fade }} className="relative h-full section-container flex flex-col justify-end pb-16">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
