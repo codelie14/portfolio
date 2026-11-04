@@ -1,8 +1,9 @@
+import { useTr } from '@/i18n';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { markBooted } from './motion/boot';
 
-const LINES = [
+const LINES_FR = [
   '[ OK ] Initialisation du noyau AY.sec',
   '[ OK ] Chargement des modules IAM',
   '[ OK ] Montage du pare-feu applicatif',
@@ -10,9 +11,19 @@ const LINES = [
   '[ OK ] Vérification des signatures',
   '> Accès autorisé.',
 ];
+const LINES_EN = [
+  '[ OK ] Booting AY.sec kernel',
+  '[ OK ] Loading IAM modules',
+  '[ OK ] Mounting application firewall',
+  '[ OK ] Connecting to network — Abidjan, CI',
+  '[ OK ] Verifying signatures',
+  '> Access granted.',
+];
 
 /** Écran de démarrage façon séquence de boot, puis rideau qui s'ouvre. */
 export default function Loader() {
+  const tr = useTr();
+  const LINES = tr(LINES_FR, LINES_EN);
   const [pct, setPct] = useState(0);
   const [done, setDone] = useState(false);
 
@@ -80,7 +91,7 @@ export default function Loader() {
               <div className="text-[11px] sm:text-xs text-muted-foreground uppercase tracking-[0.3em]">
                 Archange Elie Yatte
                 <br />
-                Sécurité · Développement
+                {tr('Sécurité · Développement', 'Security · Development')}
               </div>
               <div className="font-display text-7xl sm:text-9xl font-bold text-foreground tabular-nums leading-none">
                 {pct}

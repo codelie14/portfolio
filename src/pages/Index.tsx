@@ -4,15 +4,25 @@ import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
 import Experience from '@/components/Experience';
-import { Cursor, Grain, ScrollProgress } from '@/components/motion/Chrome';
+import IamFlow from '@/components/IamFlow';
+import Signature from '@/components/Signature';
+import CommandCenter from '@/components/CommandCenter';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { PersonSchema, WebSiteSchema } from '@/components/StructuredData';
 
 const Index = () => {
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const t = setTimeout(() => document.querySelector(hash)?.scrollIntoView({ behavior: 'instant' as ScrollBehavior }), 80);
+    return () => clearTimeout(t);
+  }, [hash]);
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-clip">
       <SEO />
       <PersonSchema
         name="Archange Elie Yatte"
@@ -34,15 +44,15 @@ const Index = () => {
           name: 'Archange Elie Yatte'
         }}
       />
-      <ScrollProgress />
-      <Cursor />
-      <Grain />
       <Navigation />
       <main>
         <Hero />
+        <Signature />
         <About />
         <Experience />
+        <CommandCenter />
         <Projects />
+        <IamFlow />
         <Skills />
         <Contact />
       </main>

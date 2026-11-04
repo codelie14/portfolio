@@ -12,5 +12,7 @@ Allow: /
 
 User-agent: *
 Allow: /
+# Rien à voir ici… ou presque. / Nothing to see here… or is there?
+Disallow: /.well-known/ay-challenge.txt
 
 Sitemap: https://archangeyatte.vercel.app/sitemap.xml

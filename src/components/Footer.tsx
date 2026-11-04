@@ -1,3 +1,4 @@
+import { useTr, useLang } from '@/i18n';
 import { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { Magnetic, Marquee } from './motion/primitives';
@@ -15,6 +16,7 @@ function AbidjanClock() {
 }
 
 export default function Footer() {
+  const tr = useTr();
   return (
     <footer className="relative pt-16 pb-8 border-t border-border/60 overflow-hidden">
       <Marquee
@@ -36,7 +38,7 @@ export default function Footer() {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 hover:border-primary hover:text-primary transition-colors"
           >
-            Haut de page <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
+            {tr('Haut de page', 'Back to top')} <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
           </button>
         </Magnetic>
       </div>

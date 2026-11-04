@@ -1,3 +1,4 @@
+import { useTr } from '@/i18n';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDownRight, Download, Github, Linkedin, Facebook } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
@@ -5,7 +6,8 @@ import NetworkCanvas from './motion/NetworkCanvas';
 import { Magnetic, ScrambleText } from './motion/primitives';
 import { useBooted } from './motion/boot';
 
-const ROLES = ['Ingénieur Sécurité', 'Développeur Full-Stack', 'IAM & Security Governance', "Fondateur d'IndraLabs"];
+const ROLES_FR = ['Ingénieur Sécurité', 'Développeur Full-Stack', 'IAM & Security Governance', "Fondateur d'IndraLabs"];
+const ROLES_EN = ['Security Engineer', 'Full-Stack Developer', 'IAM & Security Governance', 'Founder of IndraLabs'];
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 function BigLine({ text, delay, booted, className }: { text: string; delay: number; booted: boolean; className?: string }) {
@@ -32,6 +34,8 @@ function BigLine({ text, delay, booted, className }: { text: string; delay: numb
 
 export default function Hero() {
   const booted = useBooted();
+  const tr = useTr();
+  const ROLES = tr(ROLES_FR, ROLES_EN);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
@@ -77,7 +81,7 @@ export default function Hero() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
             </span>
             <span className="text-xs sm:text-sm font-mono text-primary/90">
-              Ingénieur Sécurité @ Huawei — GNOC Abidjan
+              {tr('Ingénieur Sécurité @ Huawei — GNOC Abidjan', 'Security Engineer @ Huawei — GNOC Abidjan')}
             </span>
           </motion.div>
 
@@ -100,7 +104,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-base sm:text-xl md:text-2xl"
           >
             <span className="text-muted-foreground">~/</span>
-            <ScrambleText key={role} text={ROLES[role]} trigger={booted} delay={role === 0 ? 1.1 : 0} className="text-primary" />
+            <ScrambleText key={ROLES[role]} text={ROLES[role]} trigger={booted} delay={role === 0 ? 1.1 : 0} className="text-primary" />
             <span className="inline-block w-[0.55em] h-[1.1em] bg-primary/80 animate-pulse" />
           </motion.div>
 
@@ -110,8 +114,10 @@ export default function Hero() {
             transition={{ duration: 0.9, ease: EASE, delay: 1.3 }}
             className="mt-6 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed"
           >
-            Je protège les accès et je construis des applications sécurisées — de la gouvernance IAM
-            chez Huawei aux plateformes que je conçois et mets en production.
+            {tr(
+              'Je protège les accès et je construis des applications sécurisées — de la gouvernance IAM chez Huawei aux plateformes que je conçois et mets en production.',
+              'I protect access and build secure applications — from IAM governance at Huawei to the platforms I design and ship to production.'
+            )}
           </motion.p>
 
           <motion.div
@@ -127,7 +133,7 @@ export default function Hero() {
                 className="group relative inline-flex items-center gap-3 rounded-full bg-primary px-7 py-4 font-semibold text-primary-foreground overflow-hidden"
               >
                 <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)]" />
-                <span className="relative">Explorer mes projets</span>
+                <span className="relative">{tr('Explorer mes projets', 'Explore my work')}</span>
                 <ArrowDownRight className="relative w-5 h-5 transition-transform duration-500 group-hover:rotate-[-45deg]" />
               </a>
             </Magnetic>
@@ -169,9 +175,9 @@ export default function Hero() {
           transition={{ delay: 1.8, duration: 1 }}
           className="absolute bottom-0 inset-x-0 z-10 section-container flex items-end justify-between pb-6 font-mono text-[11px] text-muted-foreground uppercase tracking-[0.2em]"
         >
-          <span>05°19′N · 04°01′W — Abidjan</span>
+          <span className="flex flex-col gap-1"><span>05°19′N · 04°01′W — Abidjan</span><span className="hidden md:inline text-primary/70">{tr('⌘K — ouvrir le terminal', '⌘K — open the terminal')}</span></span>
           <a href="#apropos" className="flex items-center gap-3 hover:text-primary transition-colors">
-            <span className="hidden sm:inline">Défiler</span>
+            <span className="hidden sm:inline">{tr('Défiler', 'Scroll')}</span>
             <span className="relative block w-px h-10 bg-border overflow-hidden">
               <span className="absolute inset-x-0 top-0 h-1/2 bg-primary animate-scroll-line" />
             </span>

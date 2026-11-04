@@ -6,7 +6,7 @@ export const projects = [
     technologies: ['Flutter', 'FastAPI', 'Python', 'WebSocket', 'WireGuard/Tailscale', 'Ollama'],
     year: 2026,
     link: '#',
-    image: '/media/projects/kami/accueil.png',
+    image: '/media/projects/kami/accueil.webp',
     category: 'Pentesting',
     detailedDescription: 'K.A.M.I. transforme un smartphone en centre de contrôle distant pour un hôte Kali Linux : tableaux de bord système, terminal interactif, catalogue d\'outils de cybersécurité, gestion de missions, analyse assistée par IA locale et bureau distant. L\'application mobile (Flutter) ne parle jamais à l\'hôte Kali autrement qu\'à travers un tunnel VPN chiffré (WireGuard/Tailscale), vers un daemon FastAPI qui expose une API REST et plusieurs flux WebSocket temps réel (métriques, terminal, missions, bureau distant).',
     features: [
@@ -18,9 +18,9 @@ export const projects = [
       'Bureau distant via session Xfce dédiée, accessible par un client noVNC embarqué'
     ],
     images: [
-      '/media/projects/kami/accueil.png',
-      '/media/projects/kami/outils.png',
-      '/media/projects/kami/missions.png'
+      '/media/projects/kami/accueil.webp',
+      '/media/projects/kami/outils.webp',
+      '/media/projects/kami/missions.webp'
     ],
     videos: [],
     challenges: 'Exposer une interface de contrôle complète (terminal, bureau distant, lancement d\'outils offensifs) depuis un mobile sans jamais l\'exposer sur le réseau public, tout en gardant une latence utilisable en conditions réelles.',
@@ -33,7 +33,7 @@ export const projects = [
     technologies: ['Next.js', 'TypeScript', 'Django', 'DRF', 'PostgreSQL', 'Redis', 'Celery', 'Docker'],
     year: 2026,
     link: 'https://cybergram.dev',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=800&fit=crop',
+    image: '/media/projects/covers/cybergram.svg',
     category: 'Cybersécurité',
     detailedDescription: 'CyberGram rassemble en une seule plateforme tout ce dont un apprenant ou un professionnel de la cybersécurité a besoin : des cours structurés, une communauté, une veille CVE à jour, un workspace de pentest et un back-office d\'administration. Le frontend est en Next.js/TypeScript, le backend en Django REST Framework avec PostgreSQL, Redis et Celery pour les tâches asynchrones, le tout conteneurisé avec Docker. La V1 a été lancée le 31 octobre 2026 sur cybergram.dev.',
     features: [
@@ -44,9 +44,7 @@ export const projects = [
       'Back-office d\'administration complet',
       'Permissions par rôle, gestion des abonnements et des droits d\'accès'
     ],
-    images: [
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=800&fit=crop'
-    ],
+    images: ['/media/projects/covers/cybergram.svg'],
     videos: [],
     challenges: 'Faire cohabiter du contenu public, des espaces communautaires et des outils réservés aux abonnés dans une même plateforme, sans qu\'un utilisateur puisse accéder à ce qui ne lui est pas destiné.',
     solutions: 'Un modèle de permissions par rôle appliqué côté API (Django REST Framework), couplé à la gestion des abonnements : chaque ressource vérifie les droits de l\'utilisateur avant d\'être servie. Les traitements lourds (veille CVE, notifications) passent par Celery et Redis pour garder l\'interface réactive.'
@@ -58,7 +56,7 @@ export const projects = [
     technologies: ['Python', 'Linux', 'Bash', 'Docker', 'Nmap'],
     year: 2025,
     link: '#',
-    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop',
+    image: '/media/projects/covers/hackpen.svg',
     category: 'Pentesting',
     detailedDescription: 'HackPen est une plateforme d\'apprentissage interactive conçue pour former les professionnels de la cybersécurité aux techniques de test de pénétration. Basée sur Linux, elle fournit un environnement isolé et sécurisé où les utilisateurs peuvent pratiquer légalement diverses méthodes de pentesting.',
     features: [
@@ -68,11 +66,7 @@ export const projects = [
       'Intégration de Docker pour des scénarios réalistes',
       'Outils préinstallés de pentesting (Nmap, Metasploit, Burp Suite)'
     ],
-    images: [
-      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&h=400&fit=crop'
-    ],
+    images: ['/media/projects/covers/hackpen.svg'],
     videos: [],
     challenges: 'La création d\'un environnement à la fois réaliste et sécurisé représentait un défi technique majeur, notamment en matière d\'isolation des ressources et de prévention des fuites potentielles.',
     solutions: 'Nous avons mis en place une architecture basée sur Docker avec des conteneurs éphémères et des politiques de sécurité strictes pour garantir l\'intégrité de la plateforme.'
@@ -84,7 +78,7 @@ export const projects = [
     technologies: ['FastAPI', 'PostgreSQL', 'Redis', 'Celery', 'Playwright', 'Nuxt 4', 'Docker'],
     year: 2026,
     link: 'https://indrawatch.com',
-    image: '/media/projects/indrawatch/logo.png',
+    image: '/media/projects/covers/indrawatch.svg',
     category: 'Observabilité',
     detailedDescription: 'Le monitoring classique se limite à répondre à « Est-ce que mon site est en ligne ? ». IndraWatch va plus loin et répond à : quel est l\'état réel de mon site, de mes services, de leurs performances, de leur sécurité et de leur expérience utilisateur ? Les 20 phases du backend (monitoring HTTP/API/SSL/DNS, incidents, sécurité/SEO, performance navigateur, détection de changements/anomalies, nœuds distribués, AI Analyst, pages de statut et rapports) sont implémentées et testées, avec une hiérarchie de rôles à 3 paliers (client/admin/super_admin). La plateforme est en production sur indrawatch.com, avec un frontend Nuxt 4.',
     features: [
@@ -97,9 +91,7 @@ export const projects = [
       'Pages de statut publiques et rapports périodiques (dashboard, PDF)',
       'Alertes e-mail, Telegram et webhook'
     ],
-    images: [
-      '/media/projects/indrawatch/logo.png'
-    ],
+    images: ['/media/projects/covers/indrawatch.svg', '/media/projects/indrawatch/logo.webp'],
     videos: [],
     challenges: 'IndraWatch exécute des requêtes sortantes (HTTP, navigateur) vers des URLs fournies par des utilisateurs tiers — un vecteur SSRF classique — tout en devant garantir qu\'aucune donnée n\'est jamais simulée ou inventée quand une source réelle manque.',
     solutions: 'Chaque destination est validée par une garde SSRF avant toute requête sortante (HTTP, SSL, et requête par requête pour le navigateur), avec rate limiting et isolation des workers (HTTP/Browser/API séparés). Les composants sans source de données réelle pour un site donné sont explicitement listés comme indisponibles plutôt que simulés, et l\'AI Analyst renvoie un 503 explicite si aucune clé API n\'est configurée.'
@@ -111,7 +103,7 @@ export const projects = [
     technologies: ['FastAPI', 'PostgreSQL', 'Redis', 'Celery', 'Nuxt 4', 'Docker', 'OIDC/SSO'],
     year: 2026,
     link: '#',
-    image: '/media/projects/gatekeeper/dashboard.png',
+    image: '/media/projects/gatekeeper/dashboard.webp',
     category: 'IAM & Sécurité',
     detailedDescription: 'GateKeeper centralise la gestion des demandes et des accès : tickets, workflows de validation, provisioning et audit. Le cycle de vie d\'une demande couvre la création à partir d\'un formulaire dynamique piloté par schéma JSON, la soumission, un workflow d\'approbation configurable (étapes séquentielles, approbateurs ad hoc, escalade, délégation), jusqu\'à la prise en charge, la résolution et la clôture — avec signature électronique des décisions et export PDF.',
     features: [
@@ -124,10 +116,10 @@ export const projects = [
       'Recherche globale (⌘K), notifications temps réel (SSE), journal d\'audit complet'
     ],
     images: [
-      '/media/projects/gatekeeper/dashboard.png',
-      '/media/projects/gatekeeper/requests-list.png',
-      '/media/projects/gatekeeper/request-form.png',
-      '/media/projects/gatekeeper/request-types.png'
+      '/media/projects/gatekeeper/dashboard.webp',
+      '/media/projects/gatekeeper/requests-list.webp',
+      '/media/projects/gatekeeper/request-form.webp',
+      '/media/projects/gatekeeper/request-types.webp'
     ],
     videos: [],
     challenges: 'Concevoir un moteur de workflow d\'approbation assez générique pour s\'adapter à des dizaines de types de demandes différents (accès, matériel, visiteurs...) sans coder un cas particulier par type, tout en garantissant une base fiable et testée sur le cœur métier.',
