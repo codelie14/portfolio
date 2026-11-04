@@ -12,9 +12,11 @@ import { useLocation } from 'react-router-dom';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
-import { PersonSchema, WebSiteSchema } from '@/components/StructuredData';
+import { homeGraph } from '@/seo/site';
+import { useLang } from '@/i18n';
 
 const Index = () => {
+  const { lang } = useLang();
   const { hash } = useLocation();
   useEffect(() => {
     if (!hash) return;
@@ -23,27 +25,7 @@ const Index = () => {
   }, [hash]);
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-clip">
-      <SEO />
-      <PersonSchema
-        name="Archange Elie Yatte"
-        jobTitle="Ingénieur Sécurité & Développeur Full-Stack"
-        description="Ingénieur Sécurité chez Huawei (GNOC Abidjan) et développeur full-stack. Gestion des accès (IAM), sécurité applicative et plateformes en production avec FastAPI, Django, Next.js et Nuxt."
-        url="https://archangeyatte.vercel.app/"
-        sameAs={[
-          "https://github.com/codelie14",
-          "https://linkedin.com/in/archange-yatte",
-          "https://facebook.com/codelie14"
-        ]}
-      />
-      <WebSiteSchema
-        name="Portfolio - Archange Elie Yatte"
-        description="Portfolio de Archange Elie Yatte - Ingénieur Sécurité et Développeur Full-Stack basé en Côte d'Ivoire."
-        url="https://archangeyatte.vercel.app/"
-        publisher={{
-          '@type': 'Person',
-          name: 'Archange Elie Yatte'
-        }}
-      />
+      <SEO jsonLd={homeGraph(lang)} />
       <Navigation />
       <main>
         <Hero />

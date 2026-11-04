@@ -7,16 +7,16 @@ const LangContext = createContext<Ctx>({ lang: 'fr', setLang: () => {}, toggle: 
 
 function initialLang(): Lang {
   try {
-    const saved = localStorage.getItem('lang');
-    if (saved === 'fr' || saved === 'en') return saved;
-  } catch {
-    /* stockage indisponible */
-  }
-  try {
     const q = new URLSearchParams(window.location.search).get('lang');
     if (q === 'en' || q === 'fr') return q;
   } catch {
     /* ignore */
+  }
+  try {
+    const saved = localStorage.getItem('lang');
+    if (saved === 'fr' || saved === 'en') return saved;
+  } catch {
+    /* stockage indisponible */
   }
   return 'fr';
 }
@@ -27,6 +27,15 @@ export function LangProvider({ children }: { children: ReactNode }) {
     setLangState(l);
     try {
       localStorage.setItem('lang', l);
+    } catch {
+      /* ignore */
+    }
+    // URL partageable : ?lang=en pour l'anglais, sans paramètre pour le français
+    try {
+      const u = new URL(window.location.href);
+      if (l === 'en') u.searchParams.set('lang', 'en');
+      else u.searchParams.delete('lang');
+      window.history.replaceState(window.history.state, '', u.pathname + u.search + u.hash);
     } catch {
       /* ignore */
     }

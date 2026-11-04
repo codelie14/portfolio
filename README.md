@@ -1,39 +1,28 @@
 # Portfolio - Archange Elie Yatte
 
-Portfolio professionnel de Archange Elie Yatte, Développeur Full-Stack et Analyste en Cybersécurité.
+Portfolio d'Archange Elie Yatte, Ingénieur Sécurité (Huawei, GNOC Abidjan) et développeur full-stack — [archangeyatte.vercel.app](https://archangeyatte.vercel.app).
 
 ## 🚀 Technologies
 
-- **React** + **TypeScript** - Framework frontend
-- **Vite** - Build tool rapide
-- **Tailwind CSS** - Styling utilitaire
-- **Framer Motion** - Animations fluides
-- **Lucide React** - Icônes
+- **React** + **TypeScript** + **Vite**, **Tailwind CSS**
+- **Framer Motion** (animations), **three.js** (globe et particules 3D, chargés à la demande)
+- **Fonctions Vercel** : `/api/status` (disponibilité des plateformes) et `/api/ask` (assistant IA)
+- **Vercel Analytics**
 
-## 📁 Structure du projet
+## ✨ Fonctionnalités
 
-```
-/portfolio
-├── /public
-│   └── /media
-│       └── CV_YATTE_ARCHANGE.pdf
-├── /src
-│   ├── /components
-│   │   ├── Navigation.tsx
-│   │   ├── Hero.tsx
-│   │   ├── About.tsx
-│   │   ├── Projects.tsx
-│   │   ├── ProjectCard.tsx
-│   │   ├── Skills.tsx
-│   │   ├── Contact.tsx
-│   │   └── Footer.tsx
-│   ├── /pages
-│   │   └── Index.tsx
-│   ├── index.css
-│   └── main.tsx
-├── tailwind.config.ts
-└── index.html
-```
+- Écran de démarrage, curseur magnétique, transitions de pages, version FR/EN (`?lang=en`)
+- Particules 3D, globe 3D, carrousel 3D des projets, démo IAM animée
+- Terminal caché (⌘K), défi CTF, easter egg (code Konami), sons d'interface
+- SEO : pré-rendu de chaque page (`scripts/prerender.mjs`), JSON-LD, hreflang, sitemap généré au build
+- En-têtes de sécurité (CSP, HSTS…) dans `vercel.json`
+
+## 🔑 Variables d'environnement (Vercel)
+
+| Variable | Rôle |
+|---|---|
+| `ANTHROPIC_API_KEY` | Active l'assistant « Demander à Archange » |
+| `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID`, `VITE_EMAILJS_PUBLIC_KEY`, `VITE_EMAILJS_AUTOREPLY_TEMPLATE_ID` | Formulaire de contact |
 
 ## 🛠️ Installation
 

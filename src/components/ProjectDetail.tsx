@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight, X } from 'lucide-react';
 import { useProjects } from '@/data/en';
 import { useLang, useTr } from '@/i18n';
 import SEO from './SEO';
+import { projectMeta } from '@/seo/site';
 import { Reveal, SplitReveal } from './motion/primitives';
 import Footer from './Footer';
 
@@ -36,14 +37,13 @@ export default function ProjectDetail() {
   const next = all.find((p) => p.id === ORDER[(idx + 1) % ORDER.length])!;
   const live = project.link && project.link !== '#';
   const gallery = Array.from(new Set(project.images));
+  const meta = projectMeta(project.id, lang);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <SEO
-        title={`${project.title} — Archange Elie Yatte`}
-        description={project.description}
-        url={`https://archangeyatte.vercel.app/projects/${project.id}`}
-      />
+      {meta && (
+        <SEO title={meta.title} description={meta.description} path={`/projects/${project.id}`} image={meta.image} type="article" jsonLd={meta.graph} />
+      )}
 
       {/* Barre haute */}
       <div className="fixed top-0 inset-x-0 z-[80] section-container pt-4">

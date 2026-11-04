@@ -1,0 +1,16 @@
+{
+  "name": "Archange Elie Yatte — Ingénieur Sécurité & Développeur Full-Stack",
+  "short_name": "Archange Y.",
+  "description": "Portfolio d'Archange Elie Yatte : sécurité (IAM), développement full-stack et projets en production.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#06080c",
+  "theme_color": "#06080c",
+  "lang": "fr",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
