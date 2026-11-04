@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -63,6 +63,10 @@
 
   html {
     scroll-behavior: smooth;
+  }
+
+  html.has-cursor, html.has-cursor * {
+    cursor: none !important;
   }
 
   /* Hide scrollbar during loading */
@@ -299,4 +303,99 @@
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-primary/50;
+}
+
+/* ===== Motion design ===== */
+.section-kicker {
+  @apply font-mono text-xs sm:text-sm uppercase tracking-[0.3em] text-primary flex items-center gap-3;
+}
+.section-kicker::before {
+  content: '';
+  @apply inline-block w-10 h-px bg-primary;
+}
+
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px hsl(var(--foreground) / 0.9);
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  transition: background-size 1.2s cubic-bezier(.16,1,.3,1);
+}
+.text-stroke:hover { background-size: 100% 100%; }
+
+.text-stroke-muted {
+  color: transparent;
+  -webkit-text-stroke: 1px hsl(var(--muted-foreground) / 0.45);
+}
+.text-stroke-muted:hover { -webkit-text-stroke-color: hsl(var(--primary)); }
+
+.marquee-track { animation: marquee linear infinite; }
+.marquee-mask:hover .marquee-track { animation-play-state: paused; }
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+@keyframes marquee { to { transform: translateX(calc(-50% - 1.25rem)); } }
+
+.grain {
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1s steps(4) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0,0); } 25% { transform: translate(-3%,2%); }
+  50% { transform: translate(2%,-3%); } 75% { transform: translate(-2%,-1%); } 100% { transform: translate(0,0); }
+}
+
+.scanlines {
+  background: repeating-linear-gradient(0deg, hsl(var(--primary) / 0.12) 0 1px, transparent 1px 4px);
+}
+
+.terminal-card {
+  @apply rounded-2xl border border-border/70 bg-card/50 backdrop-blur-xl overflow-hidden;
+  box-shadow: 0 30px 80px -40px hsl(var(--primary) / 0.35);
+}
+
+.spotlight-card { transform-style: preserve-3d; }
+.spotlight-card::before {
+  content: '';
+  @apply absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 pointer-events-none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), hsl(var(--primary) / 0.14), transparent 45%);
+}
+.spotlight-card:hover::before { @apply opacity-100; }
+.spotlight-card:hover { border-color: hsl(var(--primary) / 0.4); }
+
+.project-panel {
+  background: hsl(220 22% 5%);
+  box-shadow: 0 -20px 60px -30px hsl(var(--a) / 0.45), 0 40px 80px -40px rgba(0,0,0,0.8);
+}
+
+/* Lien de navigation qui « roule » au survol */
+.nav-roll { position: relative; overflow: hidden; display: inline-flex; }
+.nav-roll > span { display: inline-block; transition: transform .5s cubic-bezier(.16,1,.3,1); }
+.nav-roll > span::after {
+  content: attr(data-text);
+  position: absolute; left: 0; top: 100%;
+  color: hsl(var(--primary));
+}
+.nav-roll:hover > span { transform: translateY(-100%); }
+
+@keyframes blob {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(8%,-6%) scale(1.1); }
+  66% { transform: translate(-6%,8%) scale(0.95); }
+}
+.animate-blob { animation: blob 18s ease-in-out infinite; }
+
+@keyframes scroll-line {
+  0% { transform: translateY(-100%); } 100% { transform: translateY(200%); }
+}
+.animate-scroll-line { animation: scroll-line 1.8s cubic-bezier(.76,0,.24,1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .grain, .animate-blob, .animate-scroll-line { animation: none !important; }
+  html { scroll-behavior: auto; }
 }

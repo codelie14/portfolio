@@ -28,29 +28,28 @@ export const projects = [
   },
   {
     id: 'cybergram',
-    title: 'CYBERGRAM',
-    description: 'Plateforme de veille automatisée en cybersécurité avec génération d\'articles par IA. Agrégation de sources, analyse et publication automatique.',
-    technologies: ['Node.js', 'Python', 'IA', 'API REST', 'MongoDB'],
-    year: 2025,
-    link: '#',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop',
+    title: 'CyberGram V1',
+    description: 'Écosystème cybersécurité tout-en-un : cours, communauté, veille CVE, workspace de pentest et back-office, avec permissions par rôle et abonnements.',
+    technologies: ['Next.js', 'TypeScript', 'Django', 'DRF', 'PostgreSQL', 'Redis', 'Celery', 'Docker'],
+    year: 2026,
+    link: 'https://cybergram.dev',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=800&fit=crop',
     category: 'Cybersécurité',
-    detailedDescription: 'CYBERGRAM est une plateforme innovante de veille automatisée en cybersécurité qui utilise l\'intelligence artificielle pour générer des articles pertinents à partir de sources variées. Le système agrège automatiquement les informations de plusieurs flux RSS, sites d\'actualités techniques et bulletins de sécurité, puis les analyse pour produire des résumés structurés et des analyses approfondies.',
+    detailedDescription: 'CyberGram rassemble en une seule plateforme tout ce dont un apprenant ou un professionnel de la cybersécurité a besoin : des cours structurés, une communauté, une veille CVE à jour, un workspace de pentest et un back-office d\'administration. Le frontend est en Next.js/TypeScript, le backend en Django REST Framework avec PostgreSQL, Redis et Celery pour les tâches asynchrones, le tout conteneurisé avec Docker. La V1 a été lancée le 31 octobre 2026 sur cybergram.dev.',
     features: [
-      'Agrégation automatique de sources d\'information en cybersécurité',
-      'Analyse sémantique avec traitement du langage naturel',
-      'Génération d\'articles par IA avec différents niveaux de détail',
-      'Classification des articles par catégories de menace',
-      'Publication automatisée sur les réseaux sociaux et newsletters'
+      'Cours et parcours d\'apprentissage en cybersécurité',
+      'Communauté : publications, échanges et entraide',
+      'Veille CVE : suivi des vulnérabilités publiées',
+      'Workspace de pentest pour organiser ses missions',
+      'Back-office d\'administration complet',
+      'Permissions par rôle, gestion des abonnements et des droits d\'accès'
     ],
     images: [
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop',
-      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop'
+      'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&h=800&fit=crop'
     ],
     videos: [],
-    challenges: 'Le principal défi était d\'implémenter un système d\'analyse sémantique capable de distinguer les informations pertinentes des bruits informationnels, tout en maintenant une génération de contenu de qualité constante.',
-    solutions: 'Nous avons développé un pipeline de traitement NLP personnalisé combiné à un modèle de classification multi-catégorie pour assurer la pertinence des articles générés.'
+    challenges: 'Faire cohabiter du contenu public, des espaces communautaires et des outils réservés aux abonnés dans une même plateforme, sans qu\'un utilisateur puisse accéder à ce qui ne lui est pas destiné.',
+    solutions: 'Un modèle de permissions par rôle appliqué côté API (Django REST Framework), couplé à la gestion des abonnements : chaque ressource vérifie les droits de l\'utilisateur avant d\'être servie. Les traitements lourds (veille CVE, notifications) passent par Celery et Redis pour garder l\'interface réactive.'
   },
   {
     id: 'hackpen',
@@ -87,7 +86,7 @@ export const projects = [
     link: 'https://indrawatch.com',
     image: '/media/projects/indrawatch/logo.png',
     category: 'Observabilité',
-    detailedDescription: 'Le monitoring classique se limite à répondre à « Est-ce que mon site est en ligne ? ». IndraWatch va plus loin et répond à : quel est l\'état réel de mon site, de mes services, de leurs performances, de leur sécurité et de leur expérience utilisateur ? Les 20 phases du backend (monitoring HTTP/API/SSL/DNS, incidents, sécurité/SEO, performance navigateur, détection de changements/anomalies, nœuds distribués, AI Analyst, pages de statut et rapports) sont implémentées et testées, avec une hiérarchie de rôles à 3 paliers (client/admin/super_admin). Le frontend (Nuxt 4) est en cours — la fondation est posée, les pages métier restent à construire.',
+    detailedDescription: 'Le monitoring classique se limite à répondre à « Est-ce que mon site est en ligne ? ». IndraWatch va plus loin et répond à : quel est l\'état réel de mon site, de mes services, de leurs performances, de leur sécurité et de leur expérience utilisateur ? Les 20 phases du backend (monitoring HTTP/API/SSL/DNS, incidents, sécurité/SEO, performance navigateur, détection de changements/anomalies, nœuds distribués, AI Analyst, pages de statut et rapports) sont implémentées et testées, avec une hiérarchie de rôles à 3 paliers (client/admin/super_admin). La plateforme est en production sur indrawatch.com, avec un frontend Nuxt 4.',
     features: [
       'Availability & API monitoring avec réduction des faux positifs',
       'Web Vitals (LCP, INP, CLS), Browser Monitoring (Playwright) et Synthetic Monitoring',
@@ -95,7 +94,8 @@ export const projects = [
       'Security & SEO Monitoring, Change & Anomaly Detection (fingerprinting de contenu)',
       'Health Score explicable par site, cycle de vie d\'incidents avec timeline corrélée',
       'AI Analyst : explication des incidents avec niveau de confiance, jamais d\'analyse simulée',
-      'Pages de statut publiques et rapports périodiques (dashboard, PDF)'
+      'Pages de statut publiques et rapports périodiques (dashboard, PDF)',
+      'Alertes e-mail, Telegram et webhook'
     ],
     images: [
       '/media/projects/indrawatch/logo.png'

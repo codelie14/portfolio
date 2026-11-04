@@ -3,6 +3,8 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Skills from '@/components/Skills';
+import Experience from '@/components/Experience';
+import { Cursor, Grain, ScrollProgress } from '@/components/motion/Chrome';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
@@ -14,8 +16,8 @@ const Index = () => {
       <SEO />
       <PersonSchema
         name="Archange Elie Yatte"
-        jobTitle="Développeur Full-Stack & Analyste Cybersécurité"
-        description="Développeur Full-Stack et Analyste en Cybersécurité basé en Côte d'Ivoire. Spécialisé dans le développement d'applications sécurisées avec Next.js, Node.js, Python et l'analyse de vulnérabilités."
+        jobTitle="Ingénieur Sécurité & Développeur Full-Stack"
+        description="Ingénieur Sécurité chez Huawei (GNOC Abidjan) et développeur full-stack. Gestion des accès (IAM), sécurité applicative et plateformes en production avec FastAPI, Django, Next.js et Nuxt."
         url="https://archangeyatte.vercel.app/"
         sameAs={[
           "https://github.com/codelie14",
@@ -25,17 +27,21 @@ const Index = () => {
       />
       <WebSiteSchema
         name="Portfolio - Archange Elie Yatte"
-        description="Portfolio de Archange Elie Yatte - Développeur Full-Stack et Analyste en Cybersécurité basé en Côte d'Ivoire."
+        description="Portfolio de Archange Elie Yatte - Ingénieur Sécurité et Développeur Full-Stack basé en Côte d'Ivoire."
         url="https://archangeyatte.vercel.app/"
         publisher={{
           '@type': 'Person',
           name: 'Archange Elie Yatte'
         }}
       />
+      <ScrollProgress />
+      <Cursor />
+      <Grain />
       <Navigation />
       <main>
         <Hero />
         <About />
+        <Experience />
         <Projects />
         <Skills />
         <Contact />

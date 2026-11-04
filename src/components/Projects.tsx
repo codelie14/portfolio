@@ -1,70 +1,132 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import ProjectCard from './ProjectCard';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight } from 'lucide-react';
 import { projects } from '@/data';
+import { Reveal, SplitReveal } from './motion/primitives';
 
-export default function Projects() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+const ORDER = ['indrawatch', 'cybergram', 'gatekeeper', 'kami', 'hackpen'];
+const ACCENTS = ['187 100% 50%', '160 84% 45%', '210 100% 60%', '270 80% 65%', '340 85% 60%'];
+const ordered = ORDER.map((id) => projects.find((p) => p.id === id)!).filter(Boolean);
+
+type Project = (typeof projects)[number];
+
+function Card({
+  p,
+  i,
+  total,
+  progress,
+}: {
+  p: Project;
+  i: number;
+  total: number;
+  progress: MotionValue<number>;
+}) {
+  const start = i / total;
+  const scale = useTransform(progress, [start, 1], [1, 1 - (total - i) * 0.04]);
+  const dim = useTransform(progress, [start, Math.min(1, start + 1 / total)], [0, i === total - 1 ? 0 : 0.5]);
+  const accent = ACCENTS[i % ACCENTS.length];
+  const isLogo = p.image.endsWith('logo.png');
+  const live = p.link && p.link !== '#';
 
   return (
-    <section id="projets" className="py-24 relative" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 cyber-grid opacity-50" />
-      
-      <div className="relative section-container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-mono text-sm mb-4 block">
-            // Mes réalisations
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Projets<span className="text-primary">.</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Une sélection de projets qui démontrent mes compétences en développement 
-            et en cybersécurité.
-          </p>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full mt-6" />
-        </motion.div>
-
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-            >
-              <ProjectCard project={project} index={index} />
-            </motion.div>
-          ))}
+    <div className="sticky top-20 md:top-24 h-[calc(100svh-6rem)] flex items-start justify-center" style={{ paddingTop: i * 14 }}>
+      <motion.article
+        style={{ scale, ['--a' as string]: accent }}
+        className="project-panel group relative w-full h-[min(78svh,640px)] rounded-[28px] overflow-hidden border border-white/10 origin-top"
+      >
+        {/* Visuel */}
+        <div className="absolute inset-0">
+          <img
+            src={p.image}
+            alt={p.title}
+            loading="lazy"
+            onError={(e) => (e.currentTarget.style.visibility = 'hidden')}
+            className={`w-full h-full transition-transform duration-[1.4s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-105 ${
+              isLogo ? 'object-contain p-24 md:p-40 opacity-90' : 'object-cover object-top'
+            }`}
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(220_22%_4%/0.2)_0%,hsl(220_22%_4%/0.75)_55%,hsl(220_22%_4%)_100%)]" />
+          <div className="absolute inset-0 opacity-60 bg-[radial-gradient(circle_at_85%_10%,hsl(var(--a)/0.35),transparent_45%)]" />
         </div>
 
-        {/* More Projects CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-12"
-        >
-          <a
-            href="https://github.com/codelie14"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-mono text-sm"
-          >
-            <span>Voir plus sur GitHub</span>
-            <span className="text-primary">→</span>
-          </a>
-        </motion.div>
+        <motion.div style={{ opacity: dim }} className="absolute inset-0 bg-background pointer-events-none" />
+
+        {/* Contenu */}
+        <div className="relative h-full flex flex-col justify-between p-6 sm:p-10">
+          <div className="flex items-start justify-between gap-4 font-mono text-xs sm:text-sm">
+            <span className="px-3 py-1.5 rounded-full border border-white/15 bg-black/30 backdrop-blur-md" style={{ color: `hsl(${accent})` }}>
+              {p.category}
+            </span>
+            <span className="text-muted-foreground">
+              {String(i + 1).padStart(2, '0')} / {String(total).padStart(2, '0')} · {p.year}
+            </span>
+          </div>
+
+          <div>
+            <h3 className="font-display font-bold tracking-[-0.03em] leading-[0.9] text-[clamp(2.6rem,7vw,6rem)]">{p.title}</h3>
+            <p className="mt-4 max-w-2xl text-sm sm:text-lg text-white/75 leading-relaxed">{p.description}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {p.technologies.slice(0, 7).map((t) => (
+                <span key={t} className="px-2.5 py-1 rounded-md text-[11px] sm:text-xs font-mono bg-white/5 border border-white/10 text-white/80">
+                  {t}
+                </span>
+              ))}
+            </div>
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link
+                to={`/projects/${p.id}`}
+                data-cursor="Ouvrir"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
+                style={{ background: `hsl(${accent})` }}
+              >
+                Étude de cas <ArrowUpRight className="w-4 h-4" />
+              </Link>
+              {live && (
+                <a
+                  href={p.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium border border-white/20 hover:border-white/50 transition-colors"
+                >
+                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" /> En ligne — {p.link.replace('https://', '')}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.article>
+    </div>
+  );
+}
+
+export default function Projects() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+
+  return (
+    <section id="projets" className="relative py-28 md:py-40">
+      <div className="section-container">
+        <Reveal>
+          <p className="section-kicker">03 — Projets</p>
+        </Reveal>
+        <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+          <h2 className="font-display font-bold tracking-tight text-[clamp(2.6rem,8vw,6.5rem)] leading-[0.95]">
+            <SplitReveal text="Réalisations" />
+            <span className="text-primary">.</span>
+          </h2>
+          <Reveal delay={0.2}>
+            <p className="max-w-sm text-muted-foreground">
+              Des plateformes complètes, de l'architecture au déploiement — chacune pensée sécurité d'abord.
+            </p>
+          </Reveal>
+        </div>
+
+        <div ref={ref} className="relative mt-16">
+          {ordered.map((p, i) => (
+            <Card key={p.id} p={p} i={i} total={ordered.length} progress={scrollYProgress} />
+          ))}
+        </div>
       </div>
     </section>
   );

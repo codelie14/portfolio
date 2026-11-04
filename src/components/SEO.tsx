@@ -12,8 +12,8 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = 'Archange Elie Yatte | Développeur Full-Stack & Analyste Cybersécurité',
-  description = 'Portfolio de Archange Elie Yatte - Développeur Full-Stack et Analyste en Cybersécurité basé en Côte d\'Ivoire. Spécialisé dans le développement d\'applications sécurisées avec Next.js, Node.js, Python et l\'analyse de vulnérabilités.',
+  title = 'Archange Elie Yatte | Ingénieur Sécurité & Développeur Full-Stack',
+  description = 'Portfolio de Archange Elie Yatte - Ingénieur Sécurité chez Huawei (GNOC Abidjan) et développeur full-stack : IAM, sécurité applicative, plateformes en production.',
   keywords = 'Archange Elie Yatte, développeur, full-stack, cybersécurité, analyste, Côte d\'Ivoire, Next.js, Node.js, Python, sécurité web, pentesting',
   image = '/media/photo-profile.png',
   url = 'https://archangeyatte.vercel.app/',

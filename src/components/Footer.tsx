@@ -1,62 +1,44 @@
-import { motion } from 'framer-motion';
-import { Terminal, Heart, Github, Linkedin, Facebook } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUp } from 'lucide-react';
+import { Magnetic, Marquee } from './motion/primitives';
+
+function AbidjanClock() {
+  const [t, setT] = useState('');
+  useEffect(() => {
+    const f = () =>
+      setT(new Date().toLocaleTimeString('fr-FR', { timeZone: 'Africa/Abidjan', hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    f();
+    const id = setInterval(f, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return <span className="tabular-nums">{t}</span>;
+}
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="py-8 border-t border-border/50 bg-card/30">
-      <div className="section-container">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Logo */}
-          <motion.a
-            href="#accueil"
-            className="flex items-center gap-2 text-lg font-bold"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+    <footer className="relative pt-16 pb-8 border-t border-border/60 overflow-hidden">
+      <Marquee
+        duration={30}
+        items={[
+          <span key="a" className="font-display font-bold text-[clamp(4rem,14vw,12rem)] leading-none tracking-[-0.04em] text-stroke-muted">
+            Archange Elie Yatte
+          </span>,
+          <span key="b" className="text-primary text-5xl">✦</span>,
+        ]}
+      />
+      <div className="section-container mt-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 font-mono text-xs text-muted-foreground">
+        <p>© {new Date().getFullYear()} Archange Elie Yatte · IndraLabs</p>
+        <p>
+          Abidjan · <AbidjanClock /> GMT
+        </p>
+        <Magnetic>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 hover:border-primary hover:text-primary transition-colors"
           >
-            <Terminal className="w-5 h-5 text-primary" />
-            <span className="gradient-text">Archange Elie Yatte</span>
-          </motion.a>
-
-          {/* Copyright */}
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            © {currentYear} Fait avec
-            <Heart className="w-4 h-4 text-primary inline-block animate-pulse" />
-            par Archange Elie Yatte
-          </p>
-
-          {/* Quick Links */}
-          <div className="flex items-center gap-4 text-sm">
-            <a
-              href="https://github.com/codelie14"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <a
-              href="https://linkedin.com/in/archange-yatte"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="https://facebook.com/codelie14"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors"
-              aria-label="Facebook"
-            >
-              <Facebook className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
+            Haut de page <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
+          </button>
+        </Magnetic>
       </div>
     </footer>
   );
