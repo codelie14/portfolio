@@ -85,7 +85,7 @@ export function SplitReveal({
           {w.split('').map((ch) => {
             const i = idx++;
             return (
-              <span key={i} className="inline-block overflow-hidden align-bottom pb-[0.08em]">
+              <span key={i} className="inline-block overflow-hidden align-bottom pb-[0.16em] -mb-[0.08em]">
                 <motion.span
                   className="inline-block"
                   initial={{ y: '110%', rotate: 8 }}

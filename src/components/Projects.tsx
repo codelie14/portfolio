@@ -2,14 +2,12 @@ import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { projects } from '@/data';
+import { useProjects, Project } from '@/data/en';
+import { useTr } from '@/i18n';
 import { Reveal, SplitReveal } from './motion/primitives';
 
 const ORDER = ['indrawatch', 'cybergram', 'gatekeeper', 'kami', 'hackpen'];
 const ACCENTS = ['187 100% 50%', '160 84% 45%', '210 100% 60%', '270 80% 65%', '340 85% 60%'];
-const ordered = ORDER.map((id) => projects.find((p) => p.id === id)!).filter(Boolean);
-
-type Project = (typeof projects)[number];
 
 function Card({
   p,
@@ -25,8 +23,9 @@ function Card({
   const start = i / total;
   const scale = useTransform(progress, [start, 1], [1, 1 - (total - i) * 0.04]);
   const dim = useTransform(progress, [start, Math.min(1, start + 1 / total)], [0, i === total - 1 ? 0 : 0.5]);
+  const tr = useTr();
   const accent = ACCENTS[i % ACCENTS.length];
-  const isLogo = p.image.endsWith('logo.png');
+  const isLogo = false;
   const live = p.link && p.link !== '#';
 
   return (
@@ -80,7 +79,7 @@ function Card({
                 className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-background transition-transform hover:scale-[1.03]"
                 style={{ background: `hsl(${accent})` }}
               >
-                Étude de cas <ArrowUpRight className="w-4 h-4" />
+                {tr('Étude de cas', 'Case study')} <ArrowUpRight className="w-4 h-4" />
               </Link>
               {live && (
                 <a
@@ -89,7 +88,7 @@ function Card({
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium border border-white/20 hover:border-white/50 transition-colors"
                 >
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" /> En ligne — {p.link.replace('https://', '')}
+                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" /> {tr('En ligne', 'Live')} — {p.link.replace('https://', '')}
                 </a>
               )}
             </div>
@@ -103,21 +102,27 @@ function Card({
 export default function Projects() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const tr = useTr();
+  const all = useProjects();
+  const ordered = ORDER.map((id) => all.find((p) => p.id === id)!).filter(Boolean);
 
   return (
     <section id="projets" className="relative py-28 md:py-40">
       <div className="section-container">
         <Reveal>
-          <p className="section-kicker">03 — Projets</p>
+          <p className="section-kicker">{tr('03 — Projets', '03 — Work')}</p>
         </Reveal>
         <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
           <h2 className="font-display font-bold tracking-tight text-[clamp(2.6rem,8vw,6.5rem)] leading-[0.95]">
-            <SplitReveal text="Réalisations" />
+            <SplitReveal key={tr('fr', 'en')} text={tr('Réalisations', 'Selected work')} />
             <span className="text-primary">.</span>
           </h2>
           <Reveal delay={0.2}>
             <p className="max-w-sm text-muted-foreground">
-              Des plateformes complètes, de l'architecture au déploiement — chacune pensée sécurité d'abord.
+              {tr(
+                "Des plateformes complètes, de l'architecture au déploiement — chacune pensée sécurité d'abord.",
+                'Complete platforms, from architecture to deployment — each one designed security-first.'
+              )}
             </p>
           </Reveal>
         </div>

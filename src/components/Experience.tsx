@@ -1,8 +1,9 @@
+import { useTr } from '@/i18n';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 import { Reveal, SplitReveal } from './motion/primitives';
 
-const ITEMS = [
+const ITEMS_FR = [
   {
     period: 'Juil. 2026 — aujourd’hui',
     role: 'Ingénieur Sécurité',
@@ -41,7 +42,48 @@ const ITEMS = [
   },
 ];
 
+const ITEMS_EN = [
+  {
+    period: 'Jul 2026 — present',
+    role: 'Security Engineer',
+    org: 'Huawei Technologies — GNOC, Abidjan',
+    points: [
+      'Access rights management: tracking account creation, modification and deletion across subsidiary platforms; account reconciliation.',
+      'Administrator accounts: periodic password rotation and account handover; tracking of intervention authorisations.',
+      'Compliance and reporting: compliance checks, asset inventory, weekly report to Security Governance.',
+    ],
+    tags: ['IAM', 'Privileged accounts', 'Compliance', 'Security Governance'],
+  },
+  {
+    period: '2025',
+    role: 'Application Developer & Security',
+    org: 'SN-TECHNOLOGY — Abidjan',
+    points: [
+      'Designed, built and launched the websites of MicroTest Microfinance CI and the real-estate agency ISIRDAH-Plus SARLU.',
+      'HackPen (Linux penetration testing) and WSAS (XSS/CSRF lab).',
+      'IT support: Windows/Linux workstations, network, peripherals.',
+    ],
+    tags: ['Web', 'Pentest', 'OWASP', 'Support'],
+  },
+  {
+    period: '2023 — 2024',
+    role: "Bachelor's in Computer Science & Digital Sciences",
+    org: 'Virtual University of Côte d’Ivoire',
+    points: ['Major in Networks and Information Security.'],
+    tags: ['Networks', 'Security'],
+  },
+  {
+    period: '2021',
+    role: 'Baccalauréat, Series C (science)',
+    org: 'Lycée Moderne 1 Adzopé',
+    points: ['Mathematics and physical sciences.'],
+    tags: [],
+  },
+];
+
 export default function Experience() {
+  const tr = useTr();
+  const ITEMS = tr(ITEMS_FR, ITEMS_EN);
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 70%', 'end 60%'] });
   const scaleY = useSpring(scrollYProgress, { stiffness: 90, damping: 25 });
@@ -50,10 +92,10 @@ export default function Experience() {
     <section id="parcours" className="relative py-28 md:py-40">
       <div className="section-container">
         <Reveal>
-          <p className="section-kicker">02 — Parcours</p>
+          <p className="section-kicker">{tr('02 — Parcours', '02 — Journey')}</p>
         </Reveal>
         <h2 className="mt-6 font-display font-bold tracking-tight text-[clamp(2.6rem,8vw,6.5rem)] leading-[0.95]">
-          <SplitReveal text="Expérience" />
+          <SplitReveal key={tr('fr', 'en')} text={tr('Expérience', 'Experience')} />
           <span className="text-primary">.</span>
         </h2>
 
@@ -66,7 +108,7 @@ export default function Experience() {
 
           <div className="space-y-20">
             {ITEMS.map((it, i) => (
-              <div key={it.role} className="relative grid md:grid-cols-[220px_1fr] gap-4 md:gap-12">
+              <div key={it.period} className="relative grid md:grid-cols-[220px_1fr] gap-4 md:gap-12">
                 <motion.span
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}

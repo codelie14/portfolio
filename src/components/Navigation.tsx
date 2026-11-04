@@ -1,17 +1,21 @@
+import { useTr, useLang } from '@/i18n';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useBooted } from './motion/boot';
 
-const navLinks = [
-  { href: '#apropos', label: 'À propos' },
-  { href: '#parcours', label: 'Parcours' },
-  { href: '#projets', label: 'Projets' },
-  { href: '#competences', label: 'Compétences' },
-  { href: '#contact', label: 'Contact' },
+const LINKS = [
+  { href: '#apropos', fr: 'À propos', en: 'About' },
+  { href: '#parcours', fr: 'Parcours', en: 'Journey' },
+  { href: '#projets', fr: 'Projets', en: 'Work' },
+  { href: '#competences', fr: 'Compétences', en: 'Skills' },
+  { href: '#contact', fr: 'Contact', en: 'Contact' },
 ];
 
 export default function Navigation() {
   const booted = useBooted();
+  const tr = useTr();
+  const { lang, toggle } = useLang();
+  const navLinks = LINKS.map((l) => ({ href: l.href, label: tr(l.fr, l.en) }));
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -56,13 +60,28 @@ export default function Navigation() {
               ))}
             </div>
 
-            <a
-              href="/media/CV_YATTE_ARCHANGE.pdf"
-              download
-              className="hidden md:inline-flex items-center rounded-full bg-foreground text-background px-5 py-2 text-sm font-semibold hover:bg-primary transition-colors"
-            >
-              Télécharger CV
-            </a>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggle}
+                aria-label={tr('Switch to English', 'Passer en français')}
+                className="relative h-9 w-[4.5rem] rounded-full border border-border/70 font-mono text-xs grid grid-cols-2 items-center overflow-hidden"
+              >
+                <motion.span
+                  layout
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-primary"
+                  style={{ left: lang === 'fr' ? 4 : 'calc(50%)' }}
+                />
+                <span className={`relative z-10 ${lang === 'fr' ? 'text-primary-foreground' : 'text-muted-foreground'}`}>FR</span>
+                <span className={`relative z-10 ${lang === 'en' ? 'text-primary-foreground' : 'text-muted-foreground'}`}>EN</span>
+              </button>
+              <a
+                href="/media/CV_YATTE_ARCHANGE.pdf"
+                download
+                className="hidden md:inline-flex items-center rounded-full bg-foreground text-background px-5 py-2 text-sm font-semibold hover:bg-primary transition-colors"
+              >
+                {tr('Télécharger CV', 'Download CV')}
+              </a>
 
             <button
               className="md:hidden relative w-10 h-10 grid place-items-center"
@@ -72,6 +91,7 @@ export default function Navigation() {
               <motion.span animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }} className="absolute w-6 h-[2px] bg-foreground" />
               <motion.span animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }} className="absolute w-6 h-[2px] bg-foreground" />
             </button>
+            </div>
           </div>
         </div>
       </motion.nav>
@@ -110,7 +130,7 @@ export default function Navigation() {
               transition={{ delay: 0.6 }}
               className="mt-10 self-start rounded-full bg-primary text-primary-foreground px-6 py-3 font-semibold"
             >
-              Télécharger mon CV
+              {tr('Télécharger mon CV', 'Download my CV')}
             </motion.a>
           </motion.div>
         )}
