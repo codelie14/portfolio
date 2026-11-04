@@ -5,6 +5,8 @@ import { ArrowUpRight } from 'lucide-react';
 import { useProjects, Project } from '@/data/en';
 import { useTr } from '@/i18n';
 import { Reveal, SplitReveal } from './motion/primitives';
+import LiquidImg from './fx/LiquidImg';
+import ProjectRing from './ProjectRing';
 
 const ORDER = ['indrawatch', 'cybergram', 'gatekeeper', 'kami', 'hackpen'];
 const ACCENTS = ['187 100% 50%', '160 84% 45%', '210 100% 60%', '270 80% 65%', '340 85% 60%'];
@@ -36,7 +38,7 @@ function Card({
       >
         {/* Visuel */}
         <div className="absolute inset-0">
-          <img
+          <LiquidImg
             src={p.image}
             alt={p.title}
             loading="lazy"
@@ -126,6 +128,10 @@ export default function Projects() {
             </p>
           </Reveal>
         </div>
+
+        <Reveal delay={0.1} className="mt-14">
+          <ProjectRing projects={ordered} />
+        </Reveal>
 
         <div ref={ref} className="relative mt-16">
           {ordered.map((p, i) => (

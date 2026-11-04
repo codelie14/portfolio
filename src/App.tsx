@@ -8,6 +8,10 @@ import { Analytics } from "@vercel/analytics/react";
 import Index from "./pages/Index";
 import PageTransition from "./components/motion/PageTransition";
 import Terminal from "./components/Terminal";
+import MatrixRain from "./components/fx/MatrixRain";
+import AskArchange from "./components/AskArchange";
+import { installGlobalSfx } from "./components/fx/sound";
+import { useEffect } from "react";
 import { Cursor, Grain, ScrollProgress } from "./components/motion/Chrome";
 
 const ProjectDetail = lazy(() => import("./components/ProjectDetail"));
@@ -42,7 +46,9 @@ function AnimatedRoutes() {
   );
 }
 
-const App = () => (
+const App = () => {
+  useEffect(() => installGlobalSfx(), []);
+  return (
   <HelmetProvider>
     <TooltipProvider>
       <Toaster />
@@ -51,11 +57,14 @@ const App = () => (
         <Cursor />
         <Grain />
         <Terminal />
+        <AskArchange />
+        <MatrixRain />
         <AnimatedRoutes />
       </BrowserRouter>
       <Analytics />
     </TooltipProvider>
   </HelmetProvider>
-);
+  );
+};
 
 export default App;

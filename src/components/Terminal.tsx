@@ -5,11 +5,19 @@ import { TerminalSquare, X } from 'lucide-react';
 import { useLang, useTr } from '@/i18n';
 import { useProjects } from '@/data/en';
 import { useBooted } from './motion/boot';
+import { triggerMatrix } from './fx/MatrixRain';
+import { isSoundOn, setSound, sfx } from './fx/sound';
+
+const FLAG_SHA256 = '541392082e162c2d7b2ea480dcd1eac5110df63c56b026b3bbd9c3196ee6048e';
+async function sha256(t: string) {
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+  return Array.from(new Uint8Array(b)).map((x) => x.toString(16).padStart(2, '0')).join('');
+}
 
 type Line = { id: number; node: ReactNode };
 let uid = 0;
 
-const COMMANDS = ['help', 'whoami', 'projets', 'open', 'competences', 'contact', 'cv', 'lang', 'clear', 'exit', 'sudo'];
+const COMMANDS = ['help', 'whoami', 'projets', 'open', 'competences', 'contact', 'cv', 'lang', 'sound', 'ctf', 'hint', 'submit', 'matrix', 'clear', 'exit', 'sudo'];
 
 /** Terminal caché : ⌘K / Ctrl+K, la touche ², ou le bouton flottant. */
 export default function Terminal() {
@@ -91,6 +99,8 @@ export default function Terminal() {
             ['contact', tr('mes coordonnées', 'my contact details')],
             ['cv', tr('télécharger mon CV', 'download my CV')],
             ['lang fr|en', tr('changer de langue', 'switch language')],
+            ['sound', tr('activer / couper les sons', 'toggle sounds')],
+            ['ctf', tr('relever le défi de sécurité caché', 'take the hidden security challenge')],
             ['clear', tr("effacer l'écran", 'clear the screen')],
             ['exit', tr('fermer le terminal', 'close the terminal')],
           ].map(([k, v]) => (
@@ -165,6 +175,49 @@ export default function Terminal() {
         push(<span className="text-accent">{l === 'en' ? 'Language: English' : 'Langue : français'}</span>);
         break;
       }
+      case 'sound':
+        setSound(!isSoundOn());
+        push(<span className="text-accent">{isSoundOn() ? tr('Sons activés', 'Sound on') : tr('Sons coupés', 'Sound off')}</span>);
+        break;
+      case 'ctf':
+        push(
+          <span className="text-primary">{tr('🏁 Défi AY.sec — trouvez le flag caché sur ce site.', '🏁 AY.sec challenge — find the flag hidden on this site.')}</span>,
+          <span className="text-muted-foreground">{tr('Format : FLAG{...} · validez avec : submit FLAG{...}', 'Format: FLAG{...} · submit it with: submit FLAG{...}')}</span>,
+          <span className="text-muted-foreground">{tr("Bloqué ? tapez 'hint'.", "Stuck? type 'hint'.")}</span>
+        );
+        break;
+      case 'hint':
+        push(
+          <span className="text-muted-foreground">{tr('Indice n°1 : les robots savent où ne pas aller.', 'Hint #1: robots know where not to go.')}</span>,
+          <span className="text-muted-foreground">{tr('Indice n°2 : base64, puis César version 13.', 'Hint #2: base64, then Caesar with a shift of 13.')}</span>
+        );
+        break;
+      case 'submit': {
+        const guess = args.join(' ').trim();
+        sha256(guess).then((h) => {
+          if (h === FLAG_SHA256) {
+            sfx('ok');
+            push(
+              <span className="text-accent">{tr('✔ Flag valide. Accès accordé — bravo !', '✔ Valid flag. Access granted — well done!')}</span>,
+              <span className="text-muted-foreground">
+                {tr("Écrivez-moi à archangeyatte@gmail.com avec l'objet « CTF » : j'adore rencontrer les curieux.", "Email me at archangeyatte@gmail.com with the subject “CTF” — I love meeting curious people.")}
+              </span>
+            );
+            setTimeout(() => {
+              setOpen(false);
+              triggerMatrix(tr('Flag capturé. Bienvenue dans le réseau.', 'Flag captured. Welcome to the network.'));
+            }, 1400);
+          } else {
+            sfx('error');
+            push(<span className="text-destructive">{tr('✘ Flag invalide. Continuez à chercher…', '✘ Invalid flag. Keep looking…')}</span>);
+          }
+        });
+        break;
+      }
+      case 'matrix':
+        setOpen(false);
+        setTimeout(() => triggerMatrix(), 300);
+        break;
       case 'clear':
         setLines([]);
         break;
@@ -194,6 +247,7 @@ export default function Terminal() {
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key.length === 1) sfx('key');
     if (e.key === 'Enter') {
       run(input);
       setInput('');
@@ -281,7 +335,7 @@ export default function Terminal() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 px-4 py-3 border-t border-border/60">
-                {['help', 'whoami', 'projets', 'open gatekeeper', 'contact', 'cv'].map((s) => (
+                {['help', 'whoami', 'projets', 'open gatekeeper', 'ctf', 'contact'].map((s) => (
                   <button
                     key={s}
                     onClick={() => run(s)}

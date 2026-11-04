@@ -2,6 +2,8 @@ import { useTr, useLang } from '@/i18n';
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useBooted } from './motion/boot';
+import { Volume2, VolumeX } from 'lucide-react';
+import { isSoundOn, onSoundChange, setSound } from './fx/sound';
 
 const LINKS = [
   { href: '#apropos', fr: 'À propos', en: 'About' },
@@ -17,6 +19,8 @@ export default function Navigation() {
   const { lang, toggle } = useLang();
   const navLinks = LINKS.map((l) => ({ href: l.href, label: tr(l.fr, l.en) }));
   const [open, setOpen] = useState(false);
+  const [sound, setSoundState] = useState(isSoundOn());
+  useEffect(() => onSoundChange(setSoundState), []);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { scrollY } = useScroll();
@@ -61,6 +65,13 @@ export default function Navigation() {
             </div>
 
             <div className="flex items-center gap-2">
+              <button
+                onClick={() => setSound(!sound)}
+                aria-label={sound ? tr('Couper les sons', 'Mute sounds') : tr('Activer les sons', 'Enable sounds')}
+                className={`grid place-items-center w-9 h-9 rounded-full border transition-colors ${sound ? 'border-primary text-primary' : 'border-border/70 text-muted-foreground hover:text-foreground'}`}
+              >
+                {sound ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+              </button>
               <button
                 onClick={toggle}
                 aria-label={tr('Switch to English', 'Passer en français')}
