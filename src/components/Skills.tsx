@@ -1,163 +1,101 @@
 import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { 
-  Code2, Shield, Wrench, Database, Terminal, 
-  Globe, Server, Lock, Palette, GitBranch 
-} from 'lucide-react';
+import { Code2, Database, Server, ShieldCheck, Bug } from 'lucide-react';
+import { Marquee, Reveal, SplitReveal } from './motion/primitives';
 
-const skillCategories = [
+const ROW1 = ['Python', 'FastAPI', 'Django', 'TypeScript', 'Next.js', 'Nuxt 4', 'React', 'Vue 3', 'Node.js', 'PHP'];
+const ROW2 = ['IAM', 'PostgreSQL', 'Redis', 'Celery', 'Docker', 'Nginx', 'WireGuard', 'Nmap', 'Wireshark', 'OWASP'];
+
+const GROUPS = [
   {
-    title: 'Développement',
+    icon: ShieldCheck,
+    title: 'Réseau & sécurité',
+    items: ['Gestion des droits d’accès', 'Comptes à privilèges', 'LAN/WAN, TCP/IP', 'Pare-feu, VPN (WireGuard)', 'Analyse de vulnérabilités', 'Nmap, Wireshark'],
+  },
+  {
+    icon: Bug,
+    title: 'Sécurité applicative',
+    items: ['OWASP Top 10', 'XSS, CSRF, injection SQL', 'SSRF, rate limiting', 'JWT, 2FA TOTP', 'Argon2, bcrypt', 'OIDC / SSO'],
+  },
+  {
     icon: Code2,
-    color: 'primary',
-    skills: [
-      { name: 'Next.js / React', level: 85 },
-      { name: 'Node.js', level: 80 },
-      { name: 'Python', level: 75 },
-      { name: 'PHP', level: 70 },
-      { name: 'TypeScript', level: 80 },
-    ]
+    title: 'Développement',
+    items: ['Python, PHP (MVC)', 'JavaScript, TypeScript', 'FastAPI, Django, Node.js', 'React, Next.js', 'Vue 3, Nuxt 4', 'API REST, Flutter'],
   },
   {
-    title: 'Cybersécurité',
-    icon: Shield,
-    color: 'accent',
-    skills: [
-      { name: 'Wireshark', level: 75 },
-      { name: 'Nmap', level: 80 },
-      { name: 'Linux Security', level: 85 },
-      { name: 'Sécurité Web', level: 80 },
-      { name: 'Pentesting', level: 70 },
-    ]
+    icon: Database,
+    title: 'Données',
+    items: ['PostgreSQL, MySQL', 'Redis', 'Celery (tâches async)', 'Tableaux de bord', 'Rapports PDF', 'SQL'],
   },
   {
-    title: 'Outils & DevOps',
-    icon: Wrench,
-    color: 'primary',
-    skills: [
-      { name: 'Git / GitHub', level: 85 },
-      { name: 'MySQL / PostgreSQL', level: 75 },
-      { name: 'Figma', level: 65 },
-      { name: 'VS Code', level: 90 },
-    ]
-  }
+    icon: Server,
+    title: 'Systèmes & DevOps',
+    items: ['Linux & Windows', 'Docker', 'Git, CI/CD', 'Nginx, Cloudflare', 'Playwright', 'Support utilisateurs'],
+  },
 ];
 
-const techIcons = [
-  { icon: Terminal, label: 'CLI' },
-  { icon: Database, label: 'Database' },
-  { icon: Server, label: 'Backend' },
-  { icon: Globe, label: 'Web' },
-  { icon: Lock, label: 'Security' },
-  { icon: GitBranch, label: 'Git' },
-  { icon: Palette, label: 'Design' },
-];
-
-function SkillBar({ name, level, delay }: { name: string; level: number; delay: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-
+function Word({ t }: { t: string }) {
   return (
-    <div ref={ref} className="mb-4">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium">{name}</span>
-        <span className="text-xs font-mono text-primary">{level}%</span>
-      </div>
-      <div className="skill-bar">
-        <motion.div
-          className="skill-bar-fill"
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 1, delay, ease: 'easeOut' }}
-        />
-      </div>
-    </div>
+    <>
+      <span className="font-display font-bold text-[clamp(2.8rem,8vw,7rem)] leading-none tracking-tight text-stroke-muted hover:text-primary transition-colors duration-300">
+        {t}
+      </span>
+      <span className="text-primary text-3xl">✦</span>
+    </>
   );
 }
 
 export default function Skills() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
-    <section id="competences" className="py-24 relative overflow-hidden" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
-      
-      <div className="relative section-container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-mono text-sm mb-4 block">
-            // Mes compétences
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Expertise<span className="text-primary">.</span>
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Un ensemble de compétences techniques acquises à travers ma formation 
-            et mes projets professionnels.
-          </p>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full mt-6" />
-        </motion.div>
+    <section id="competences" className="relative py-28 md:py-40 overflow-hidden">
+      <div className="section-container">
+        <Reveal>
+          <p className="section-kicker">04 — Compétences</p>
+        </Reveal>
+        <h2 className="mt-6 font-display font-bold tracking-tight text-[clamp(2.6rem,8vw,6.5rem)] leading-[0.95]">
+          <SplitReveal text="Arsenal" />
+          <span className="text-primary">.</span>
+        </h2>
+      </div>
 
-        {/* Tech Icons Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center gap-4 mb-16 flex-wrap"
-        >
-          {techIcons.map((item, index) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.3, delay: 0.3 + index * 0.05 }}
-              className="p-4 rounded-xl bg-secondary/30 border border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-default group"
-            >
-              <item.icon className="w-6 h-6 text-muted-foreground group-hover:text-primary transition-colors" />
-            </motion.div>
-          ))}
-        </motion.div>
+      <div className="mt-16 space-y-4 -rotate-2">
+        <Marquee items={ROW1.map((t) => <Word key={t} t={t} />)} duration={45} />
+        <Marquee items={ROW2.map((t) => <Word key={t} t={t} />)} duration={50} reverse />
+      </div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillCategories.map((category, catIndex) => (
-            <motion.div
-              key={category.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 + catIndex * 0.1 }}
-              className="glass-card p-6"
-            >
-              {/* Category Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className={`p-3 rounded-xl ${category.color === 'accent' ? 'bg-accent/10' : 'bg-primary/10'}`}>
-                  <category.icon className={`w-6 h-6 ${category.color === 'accent' ? 'text-accent' : 'text-primary'}`} />
-                </div>
-                <h3 className="text-lg font-bold">{category.title}</h3>
+      <div className="section-container mt-24 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {GROUPS.map((g, i) => (
+          <motion.div
+            key={g.title}
+            initial={{ opacity: 0, y: 40, rotateX: 25 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+            viewport={{ once: true, margin: '-10% 0px' }}
+            transition={{ duration: 0.9, delay: (i % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            onMouseMove={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+              e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+            }}
+            className={`spotlight-card relative rounded-3xl border border-border/70 bg-card/40 p-7 ${i === 0 ? 'lg:row-span-2' : ''}`}
+          >
+            <g.icon className="w-7 h-7 text-primary" />
+            <h3 className="mt-5 font-display text-xl font-semibold">{g.title}</h3>
+            <ul className="mt-4 space-y-2">
+              {g.items.map((it) => (
+                <li key={it} className="text-sm text-muted-foreground flex items-center gap-2">
+                  <span className="text-primary/70 font-mono">›</span> {it}
+                </li>
+              ))}
+            </ul>
+            {i === 0 && (
+              <div className="mt-8 rounded-2xl border border-primary/20 bg-primary/5 p-5 font-mono text-xs leading-relaxed text-primary/90">
+                <p className="text-muted-foreground">// au quotidien chez Huawei</p>
+                <p className="mt-2">create → modify → revoke</p>
+                <p>rotate(admin_passwords)</p>
+                <p>audit(compliance) → report(weekly)</p>
               </div>
-
-              {/* Skills */}
-              <div>
-                {category.skills.map((skill, skillIndex) => (
-                  <SkillBar
-                    key={skill.name}
-                    name={skill.name}
-                    level={skill.level}
-                    delay={0.5 + catIndex * 0.1 + skillIndex * 0.1}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            )}
+          </motion.div>
+        ))}
       </div>
     </section>
   );

@@ -1,125 +1,120 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Terminal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { useBooted } from './motion/boot';
 
 const navLinks = [
-  { href: '#accueil', label: 'Accueil' },
-  { href: '#apropos', label: 'À Propos' },
+  { href: '#apropos', label: 'À propos' },
+  { href: '#parcours', label: 'Parcours' },
   { href: '#projets', label: 'Projets' },
   { href: '#competences', label: 'Compétences' },
   { href: '#contact', label: 'Contact' },
 ];
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
+  const booted = useBooted();
+  const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, 'change', (v) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setHidden(v > prev && v > 300 && !open);
+    setScrolled(v > 40);
+  });
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }, [open]);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-background/80 backdrop-blur-xl border-b border-border/50' : 'bg-transparent'
-      }`}
-    >
-      <div className="section-container">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <motion.a
-            href="#accueil"
-            className="flex items-center gap-2 text-xl font-bold"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: booted && !hidden ? 0 : -100 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 inset-x-0 z-[80]"
+      >
+        <div className="section-container pt-4">
+          <div
+            className={`flex items-center justify-between h-14 px-4 sm:px-5 rounded-full transition-all duration-500 ${
+              scrolled || open ? 'bg-background/70 backdrop-blur-xl border border-border/60' : 'border border-transparent'
+            }`}
           >
-            <Terminal className="w-6 h-6 text-primary" />
-            <span className="gradient-text">AY</span>
-            <span className="text-muted-foreground font-normal text-sm hidden sm:inline">
-              .dev
-            </span>
-          </motion.a>
+            <a href="#accueil" className="flex items-center gap-2 font-display font-bold text-lg" onClick={() => setOpen(false)}>
+              <span className="grid place-items-center w-8 h-8 rounded-full bg-primary text-primary-foreground text-xs">AY</span>
+              <span className="hidden sm:inline">
+                Archange<span className="text-primary">.</span>
+              </span>
+            </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                className="nav-link text-sm font-medium"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -2 }}
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Button variant="cyber" size="sm" asChild>
-                <a href="/media/CV_YATTE_ARCHANGE.pdf" download>
-                  Télécharger CV
+            <div className="hidden md:flex items-center gap-1">
+              {navLinks.map((l) => (
+                <a key={l.href} href={l.href} className="nav-roll px-4 py-2 text-sm text-muted-foreground hover:text-foreground">
+                  <span data-text={l.label}>{l.label}</span>
                 </a>
-              </Button>
-            </motion.div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
-          >
-            <div className="section-container py-4 flex flex-col gap-4">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  className="text-foreground hover:text-primary transition-colors py-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </motion.a>
               ))}
-              <Button variant="cyber" className="mt-2" asChild>
-                <a href="/media/CV_YATTE_ARCHANGE.pdf" download>
-                  Télécharger CV
-                </a>
-              </Button>
             </div>
+
+            <a
+              href="/media/CV_YATTE_ARCHANGE.pdf"
+              download
+              className="hidden md:inline-flex items-center rounded-full bg-foreground text-background px-5 py-2 text-sm font-semibold hover:bg-primary transition-colors"
+            >
+              Télécharger CV
+            </a>
+
+            <button
+              className="md:hidden relative w-10 h-10 grid place-items-center"
+              onClick={() => setOpen(!open)}
+              aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+            >
+              <motion.span animate={open ? { rotate: 45, y: 0 } : { rotate: 0, y: -4 }} className="absolute w-6 h-[2px] bg-foreground" />
+              <motion.span animate={open ? { rotate: -45, y: 0 } : { rotate: 0, y: 4 }} className="absolute w-6 h-[2px] bg-foreground" />
+            </button>
+          </div>
+        </div>
+      </motion.nav>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
+            animate={{ clipPath: 'circle(150% at calc(100% - 44px) 44px)' }}
+            exit={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[75] bg-[hsl(220_22%_3%)] md:hidden flex flex-col justify-center px-6"
+          >
+            {navLinks.map((l, i) => (
+              <div key={l.href} className="overflow-hidden">
+                <motion.a
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  initial={{ y: '100%' }}
+                  animate={{ y: 0 }}
+                  exit={{ y: '100%' }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.25 + i * 0.06 }}
+                  className="flex items-baseline gap-4 py-2 font-display text-5xl font-bold"
+                >
+                  <span className="font-mono text-sm text-primary">0{i + 1}</span>
+                  {l.label}
+                </motion.a>
+              </div>
+            ))}
+            <motion.a
+              href="/media/CV_YATTE_ARCHANGE.pdf"
+              download
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: 0.6 }}
+              className="mt-10 self-start rounded-full bg-primary text-primary-foreground px-6 py-3 font-semibold"
+            >
+              Télécharger mon CV
+            </motion.a>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }

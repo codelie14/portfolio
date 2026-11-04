@@ -1,162 +1,114 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, MotionValue, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Code2, Shield, Globe, User } from 'lucide-react';
+import { Counter, Reveal } from './motion/primitives';
 
-const skills = [
-  'Next.js', 'Node.js', 'Python', 'PHP', 'TypeScript',
-  'Wireshark', 'Nmap', 'Linux', 'MySQL'
-];
+const STATEMENT =
+  "Je sécurise les accès des systèmes critiques et je construis les applications qui les protègent. Entre la gouvernance IAM d'un centre d'opérations réseau et le code que je mets en production, je cherche toujours la même chose : des systèmes fiables, traçables, et dignes de confiance.";
 
-const highlights = [
-  {
-    icon: Code2,
-    title: 'Développement',
-    description: 'Applications web full-stack sécurisées'
-  },
-  {
-    icon: Shield,
-    title: 'Cybersécurité',
-    description: 'Analyse de vulnérabilités & pentesting'
-  },
-  {
-    icon: Globe,
-    title: 'Langues',
-    description: 'Français (natif), Anglais (intermédiaire)'
-  }
+const HIGHLIGHT = new Set(['sécurise', 'accès', 'construis', 'production,', 'fiables,', 'traçables,', 'confiance.']);
+
+function Word({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
+  const opacity = useTransform(progress, range, [0.12, 1]);
+  const y = useTransform(progress, range, [6, 0]);
+  return (
+    <motion.span style={{ opacity, y }} className={`inline-block mr-[0.28em] ${HIGHLIGHT.has(word) ? 'text-primary' : ''}`}>
+      {word}
+    </motion.span>
+  );
+}
+
+const STATS = [
+  { n: 5, s: '', label: 'plateformes conçues de A à Z' },
+  { n: 2, s: '', label: 'en production — IndraWatch & CyberGram' },
+  { n: 80, s: '%+', label: 'de couverture de tests sur GateKeeper' },
+  { n: 2026, s: '', label: 'Ingénieur Sécurité chez Huawei' },
 ];
 
 export default function About() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const { scrollYProgress } = useScroll({ target: textRef, offset: ['start 85%', 'end 45%'] });
+  const words = STATEMENT.split(' ');
+
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: pp } = useScroll({ target: photoRef, offset: ['start end', 'end start'] });
+  const imgY = useTransform(pp, [0, 1], ['-12%', '12%']);
+  const clip = useTransform(pp, [0, 0.35], ['inset(30% 15% 30% 15% round 24px)', 'inset(0% 0% 0% 0% round 24px)']);
 
   return (
-    <section id="apropos" className="py-24 relative overflow-hidden" ref={ref}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/50 to-background" />
-      
-      <div className="relative section-container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-primary font-mono text-sm mb-4 block">
-            // À propos de moi
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Qui suis-je<span className="text-primary">?</span>
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
-        </motion.div>
+    <section id="apropos" className="relative py-28 md:py-40">
+      <div className="section-container">
+        <Reveal>
+          <p className="section-kicker">01 — À propos</p>
+        </Reveal>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Image/Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="relative aspect-square max-w-md mx-auto">
-              {/* Decorative Elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl transform rotate-6" />
-              <div className="absolute inset-0 bg-gradient-to-tl from-primary/10 to-accent/10 rounded-2xl transform -rotate-3" />
-              
-              {/* Main Card */}
-              <div className="relative glass-card p-8 h-full flex flex-col justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-primary to-accent p-1">
-                    <div className="w-full h-full rounded-full bg-card flex items-center justify-center">
-                      {/* <User className="w-16 h-16 text-primary" /> */}
-                      <img src="/media/photo-profile.png" alt="Archange Elie Yatte" className="rounded-full" />
-                    </div>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">Archange Elie Yatte</h3>
-                  <p className="text-muted-foreground font-mono text-sm">
-                    @archangeyatte
-                  </p>
-                </div>
+        <p ref={textRef} className="mt-10 font-display font-semibold tracking-tight text-[clamp(1.7rem,4.2vw,3.6rem)] leading-[1.12] max-w-6xl">
+          {words.map((w, i) => (
+            <Word key={i} word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
+          ))}
+        </p>
 
-                {/* Terminal Style Info */}
-                <div className="mt-8 p-4 bg-background/50 rounded-lg font-mono text-sm">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-accent">$</span>
-                    <span className="text-muted-foreground">localisation</span>
-                  </div>
-                  <p className="text-foreground ml-4 mb-3">Grand-Bassam, Côte d'Ivoire</p>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-accent">$</span>
-                    <span className="text-muted-foreground">education</span>
-                  </div>
-                  <p className="text-foreground ml-4 mb-3">Licence Informatique & Science du Numérique</p>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-accent">$</span>
-                    <span className="text-muted-foreground">poste actuel</span>
-                  </div>
-                  <p className="text-foreground ml-4">Security Intern @ Huawei — GNOC, Administration IAM (depuis juillet 2026)</p>
-                </div>
-              </div>
+        <div className="mt-24 grid lg:grid-cols-[0.9fr_1.1fr] gap-12 lg:gap-20 items-center">
+          <motion.div ref={photoRef} style={{ clipPath: clip }} className="relative aspect-[4/5] max-w-md w-full overflow-hidden bg-card">
+            <motion.img
+              src="/media/photo-profile.png"
+              alt="Portrait d'Archange Elie Yatte"
+              style={{ y: imgY, scale: 1.25 }}
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+            <div className="absolute inset-0 scanlines opacity-30" />
+            <div className="absolute bottom-5 left-5 right-5 font-mono text-xs">
+              <p className="text-primary">● IDENTITÉ VÉRIFIÉE</p>
+              <p className="text-muted-foreground mt-1">Archange Elie Yatte · Abidjan, Côte d'Ivoire</p>
             </div>
           </motion.div>
 
-          {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Diplômé en Réseaux et Sécurité Informatique de l'Université Virtuelle de Côte d'Ivoire, 
-              je me spécialise dans le développement d'applications sécurisées et l'analyse des vulnérabilités. 
-              Mon objectif est de contribuer à des projets innovants tout en renforçant la protection 
-              des systèmes contre les cybermenaces.
-            </p>
+          <div>
+            <Reveal>
+              <div className="terminal-card">
+                <div className="flex items-center gap-1.5 px-4 py-3 border-b border-border/60">
+                  <span className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-accent/70" />
+                  <span className="ml-3 text-xs text-muted-foreground font-mono">whoami.sh</span>
+                </div>
+                <div className="p-5 sm:p-6 font-mono text-sm space-y-4">
+                  {[
+                    ['poste', 'Ingénieur Sécurité — Huawei, GNOC Abidjan'],
+                    ['mission', "Gestion des droits d'accès, comptes à privilèges, conformité"],
+                    ['formation', 'Licence Informatique — Réseaux & Sécurité (UVCI)'],
+                    ['marque', 'IndraLabs — projets & éducation cybersécurité'],
+                    ['langues', 'Français courant · Anglais professionnel'],
+                  ].map(([k, v], i) => (
+                    <motion.div
+                      key={k}
+                      initial={{ opacity: 0, x: -12 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.15 + i * 0.12, duration: 0.6 }}
+                    >
+                      <span className="text-accent">$</span> <span className="text-muted-foreground">{k}</span>
+                      <p className="text-foreground pl-4 mt-0.5">{v}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
 
-            {/* Highlights */}
-            <div className="grid gap-4 mb-8">
-              {highlights.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  className="flex items-start gap-4 p-4 rounded-xl bg-secondary/30 border border-border/50 hover:border-primary/30 transition-colors"
-                >
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <item.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </div>
-                </motion.div>
+            <div className="mt-10 grid grid-cols-2 gap-px bg-border/60 rounded-2xl overflow-hidden">
+              {STATS.map((s, i) => (
+                <Reveal key={s.label} delay={i * 0.08} y={20} className="bg-background p-5 sm:p-6">
+                  <p className="font-display text-4xl sm:text-5xl font-bold gradient-text tabular-nums">
+                    <Counter to={s.n} suffix={s.s} />
+                  </p>
+                  <p className="mt-2 text-xs sm:text-sm text-muted-foreground leading-snug">{s.label}</p>
+                </Reveal>
               ))}
             </div>
-
-            {/* Skills Tags */}
-            <div>
-              <h4 className="text-sm font-mono text-primary mb-4">// Technologies</h4>
-              <div className="flex flex-wrap gap-2">
-                {skills.map((skill, index) => (
-                  <motion.span
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.3, delay: 0.8 + index * 0.05 }}
-                    className="px-3 py-1 text-sm font-medium bg-secondary border border-border rounded-full hover:border-primary/50 hover:text-primary transition-colors cursor-default"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-
